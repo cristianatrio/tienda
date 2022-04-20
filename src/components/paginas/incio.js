@@ -1,8 +1,9 @@
 import React from 'react'
+import '../paginas/Styles.css'
 
-  const incio = () => {
+const incio = () => {
   return (
-    <h1>Este es inicio</h1>
+    <div className="hola">hola</div>
   )
 }
 

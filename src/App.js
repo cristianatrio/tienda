@@ -5,21 +5,26 @@ import { BrowserRouter as Router,Routes, Route} from 'react-router-dom';
 import Barra from './components/navegacion/navbar'
 import inicio from './components/paginas/incio'
 import productos from './components/paginas/productos'
+import Card from './components/Cards/Cards.jsx'
+import './components/paginas/Styles.css'
+import ItemListContainer from './components/ItemListContainer/ItemListContainer';
 function App() {
   return (
     <div className="App">
-      <Router>
-
-        <Barra>
-         
-            <Route path='/inicio'exact Component = {inicio}/>
-            <Route path='/productos'exact Component = {productos}/>
-          
-        </Barra>
-      </Router>
+ 
+     
       
+   
+    <Router>
+      <Barra></Barra>
+    </Router>
+      <Card></Card>
+
+      <ItemListContainer greeting="hola"/>
+
     </div>
   );
 }
 
 export default App;
+
