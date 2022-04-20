@@ -1,25 +1,30 @@
 import logo from './logo.svg';
 import './App.css';
-
+import React, { Component } from 'react';
+import { BrowserRouter as Router,Routes, Route} from 'react-router-dom';
+import Barra from './components/navegacion/navbar'
+import inicio from './components/paginas/incio'
+import productos from './components/paginas/productos'
+import Card from './components/Cards/Cards.jsx'
+import './components/paginas/Styles.css'
+import ItemListContainer from './components/ItemListContainer/ItemListContainer';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+ 
+     
+      
+   
+    <Router>
+      <Barra></Barra>
+    </Router>
+      <Card></Card>
+
+      <ItemListContainer greeting="hola"/>
+
     </div>
   );
 }
 
 export default App;
+
