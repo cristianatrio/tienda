@@ -1,12 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
+import '../styles/stylesCount.css'
 
-import './styles.css';
 
-const ItemCount = ({ onAdd }) => {
-  const initial = 1; 
-  const stock = 10;
-
+const ItemCount = ({ initial, stock, onAdd }) => {
+  //hook de estado
   const [qty, setQty] = useState(initial);
 
   const addProduct = (num) => {
@@ -19,7 +17,6 @@ const ItemCount = ({ onAdd }) => {
         <button
           className="count-container__button"
           onClick={() => addProduct(-1)}
-         
           disabled={qty === initial ? true : null}
         >
           -
@@ -28,7 +25,6 @@ const ItemCount = ({ onAdd }) => {
         <button
           className="count-container__button"
           onClick={() => addProduct(+1)}
-          
           disabled={qty === stock ? true : null}
         >
           +

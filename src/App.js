@@ -6,6 +6,7 @@ import Barra from './components/navegacion/navbar'
 import inicio from './components/paginas/incio'
 import productos from './components/paginas/productos'
 import Card from './components/Cards/Cards.jsx'
+import ItemList from './components/ItemListContainer/itemList.jsx'
 import './components/paginas/Styles.css'
 import ItemListContainer from './components/ItemListContainer/ItemListContainer';
 function App() {
@@ -18,9 +19,9 @@ function App() {
     <Router>
       <Barra></Barra>
     </Router>
-      <Card></Card>
+     
 
-      <ItemListContainer greeting="hola"/>
+      <ItemListContainer/>
 
     </div>
   );
