@@ -1,5 +1,5 @@
 import React from 'react';
-import ItemList from './itemList';
+import ItemList from './itemList.jsx';
 
 
 const ItemListContainer = () => {
