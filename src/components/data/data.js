@@ -22,6 +22,7 @@ export const productList = [
       thumbnail:
         'https://http2.mlstatic.com/D_NQ_NP_799272-MLA44857421387_022021-W.jpg',
       stock: 6,
+      description: 'temporada verano',
       id: 3,
     },
   ];
