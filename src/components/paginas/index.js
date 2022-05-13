@@ -1,18 +1,13 @@
 import React from 'react'
-import ItemListContainer from '../ItemListContainer/ItemListContainer'
+import ItemListContainer from '../ItemListContainer/ItemListContainer.jsx'
 
-
-const Index = () => {
-  return (
-    <div className="bodyElement">
-
-
+const Home = () => {
+    return (
         <main>
-            <ItemListContainer/>
+            
+            <ItemListContainer />  
         </main>
-
-    </div>
-  )
+    )
 }
 
-export default Index
+export default Home

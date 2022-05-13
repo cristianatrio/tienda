@@ -1,10 +1,14 @@
-import React from 'react'
+import React from 'react';
+import ItemList from '../ItemListContainer/itemList.jsx';
 
- const productos = () => {
-  return (
-    <div>estos son los productos</div>
-  )
+import './css/products.css';
+
+const Products = () => {
+    return (
+        <main className="products-page-container">
+            <ItemList />
+        </main>
+    )
 }
 
-
-export default productos
+export default Products

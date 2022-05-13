@@ -1,0 +1,4 @@
+.products-page-container{
+    padding-top: 160px;
+    min-height: calc(100vh - 158px);
+}

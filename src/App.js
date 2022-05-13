@@ -1,17 +1,21 @@
 
 import './App.css';
 import React, { Component } from 'react';
-import Routs from './components/routing/Routing.jsx'
-
+import CartProvider from './Context/cartContext.js';
+import AppRouter from './components/routing/Routing.jsx';
 import './components/paginas/Styles.css'
-
+import { CartContext } from './Context/cartContext.js';
 function App() {
   return (
     <div className="App">
    
-    
-      <Routs></Routs>
-    
+   <CartContext></CartContext>
+   <CartProvider> </CartProvider> 
+
+    <AppRouter />
+
+  
+   
      
 
 
