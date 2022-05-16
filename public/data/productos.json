@@ -1,0 +1,38 @@
+{
+  "productos": [
+    {
+      "codigo": "3120",
+      "tipo": "Cortos",
+      "subtipo": "pijama verano",
+      "nombre": "grogu",
+      "descripcion": "grogu es un pijama creado de starwars",
+      "cantidad": "20",
+      "precio": " 67.52 ",
+      "imagen": "grogu.jpeg"
+    },
+    {
+      "codigo": "3121",
+      "tipo": "Largos",
+      "subtipo": "pijama invierno",
+      "nombre": "lilo",
+      "descripcion": "Lilo es un personaje creado por disney",
+      "titulo": "Más vendido",
+      "cantidad": "20",
+      "precio": " 67.52 ",
+      "imagen": "lilo.jpeg"
+    },
+    {
+      "codigo": "3122",
+      "tipo": "MediaEstacion",
+      "subtipo": "pijama verano",
+      "nombre": "Stranger Things",
+      "descripcion": "Stranger Things es una seria creada por netflix",
+      "cantidad": "20",
+      "precio": " 72.21 ",
+      "imagen": "strangerthings.jpeg"
+    }
+
+    
+
+  ]
+}

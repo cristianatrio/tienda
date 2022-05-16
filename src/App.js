@@ -1,31 +1,16 @@
-import logo from './logo.svg';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import React, { Component } from 'react';
-import { BrowserRouter as Router,Routes, Route} from 'react-router-dom';
-import Barra from './components/navegacion/navbar'
-import ItemDetailContainer from './components/itemDetailContainer/itemDetailContainer.jsx';
-import ItemListContainer from './components/ItemListContainer/ItemListContainer.jsx';
+import Rutas from './routes/Rutas.jsx';
+import GlobalProvider from './context/GlobalProvider.jsx';
 
-import './components/paginas/Styles.css'
-
-function App() {
+const App = () => {
   return (
     <div className="App">
-      <Router>
-      <Barra></Barra>
-    </Router>
-     <ItemListContainer />
-
-     <ItemDetailContainer id={3} />
-   
-    
-     
-
-
-
+      <GlobalProvider>
+          <Rutas/>
+      </GlobalProvider>
     </div>
   );
 }
 
 export default App;
-
