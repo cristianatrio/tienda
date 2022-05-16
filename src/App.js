@@ -1,28 +1,16 @@
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import React, { Component } from 'react';
-import CartProvider from './Context/cartContext.js';
-import AppRouter from './components/routing/Routing.jsx';
-import './components/paginas/Styles.css'
-import { CartContext } from './Context/cartContext.js';
-function App() {
+import Rutas from './routes/Rutas.jsx';
+import GlobalProvider from './context/GlobalProvider.jsx';
+
+const App = () => {
   return (
     <div className="App">
-   
-   <CartContext></CartContext>
-   <CartProvider> </CartProvider> 
-
-    <AppRouter />
-
-  
-   
-     
-
-
-
+      <GlobalProvider>
+          <Rutas/>
+      </GlobalProvider>
     </div>
   );
 }
 
 export default App;
-

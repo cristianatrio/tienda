@@ -1,0 +1,14 @@
+.itemDetail {
+    margin: 10px 80px;
+}
+
+.btnAdd .btnCart {
+    margin-bottom: 10px;
+    height: 3rem
+};
+
+.centrado {
+    display: 'flex';
+    justify-content: 'center';
+    align-items: 'center';   
+};
