@@ -9,10 +9,10 @@ const Layout = () => {
     <div className='layout'>
         <Header/>
 
-      
-        <div className='container-fluid' style={{ paddingTop: "5%" }}>
+   
+        <div className='container-fluid' pt-5>
           <Outlet/>
-          
+         
         </div>
 
         <Footer/>
