@@ -17,11 +17,11 @@ const Rutas = () => {
             <Routes>
                 <Route path="/" element={<Layout />}> 
                     <Route index element={<Home />} />  
-                    <Switch>
+                    
                      <Route path="/productos" element={<ProductTipo />} />  
                     <Route path="/tipo/ :tipo" element={<ProductTipo />} />  
                     <Route path="/producto/:codigo" element={<ProductDetail />} />  
-                    </Switch>
+                  
                     <Route path="/nosotros" element={<Nosotros />} />  
                     <Route path="/cart" element={<Cart />} />
                     <Route path="/checkout" element={<Checkout />} />
