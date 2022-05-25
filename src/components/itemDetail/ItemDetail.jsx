@@ -1,8 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BsFillCartPlusFill, BsFillCartCheckFill } from 'react-icons/bs';
-import { GlobalContext } from '../../context/GlobalProvider';
-import ItemCount from '../itemCount/ItemCount';
+import { GlobalContext } from '../../context/GlobalProvider.jsx';
+import ItemCount from '../itemCount/ItemCount.jsx';
+import { formatGoogleSharedUrl } from '../../utils/Utils.js'
 import './ItemDetail.css';
 
 const ItemDetail = ( { producto } ) => {
@@ -19,7 +20,9 @@ const ItemDetail = ( { producto } ) => {
   const [state, setState] = useState(producto);
 
   let nombre = producto.nombre === undefined ? `${blank}` : producto.nombre 
-  let imagen = '/images/' + ( producto.imagen === undefined ? 'imagen_no_disponible.jpg' : producto.imagen);
+  // let imagen = '/images/' + ( producto.imagen === undefined ? 'imagen_no_disponible.jpg' : producto.imagen);
+  let imagen = ( producto.url === undefined ? '/images/imagen_no_disponible.jpg' 
+                                            : formatGoogleSharedUrl(producto.url));
   let stock = producto.cantidad;
 
 

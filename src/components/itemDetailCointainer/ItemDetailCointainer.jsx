@@ -1,42 +1,63 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import ItemDetail from '../itemDetail/ItemDetail.jsx';
 import Loader from '../Loader/Loader.jsx';
 
-const ItemDetailCointainer = ({ codigo }) => {
+// Firebase
+import { db } from '../../services/firebase.js'
+import { doc, getDoc } from "firebase/firestore"
 
- 
+// const ItemDetailCointainer = ({ codigo }) => {
+const ItemDetailCointainer = ({ id }) => {
 
+  // console.log('codigo: ', codigo);
+  // console.log('id: ', id);
 
-  const [producto, setProducto] = useState(null);
+  // const [productos, setProductos] = useState([]);
+  const [producto, setProducto] = useState();
+
+  // const getProductoPorId = async () => {
+  //   try {
+  //     const response = await axios.get('/data/productos.json')
+  //     const productos = response.data.productos;
+  //     // console.log('esto es lo que hay en productos...');
+  //     // console.log(productos);
+
+  //     const productoEncontrado = productos.find(item => item.codigo === codigo)
+  //     // console.log(`productoEncontrado => ${JSON.stringify(productoEncontrado)}`)
+  //     setProducto(productoEncontrado)
+      
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
 
   const getProductoPorId = async () => {
+
+    const item = doc(db, 'productos', id)
+
     try {
-      const response = await axios.get('/data/productos.json')
-      const productos = response.data.productos;
-
-
-      const productoEncontrado = productos.find(item => item.codigo === codigo)
-
-      setProducto(productoEncontrado)
-      
+        // const docSnapshot = await getDoc(item)
+        const docSnapshot = await getDoc(item)
+        if (docSnapshot.exists()) {
+          setProducto({id: docSnapshot.id, ...docSnapshot.data()})
+        }
     } catch (error) {
-      console.error(error);
+        console.log(error);
     }
   };
 
-
-
+  // obtiene lista de productos simulando que tarda 3 segundos
   useEffect(() => {
-    setTimeout(getProductoPorId, 500);      
+    getProductoPorId();      
   }, [])  
 
 
   return (
-    <div className='itemDetailContainer'>
-      
+    <div className='itemDetailContainer container pt-5'>
         {producto ? 
-            <ItemDetail producto={producto}  /> 
+            <ItemDetail producto={producto} /> 
         : 
           <Loader/>     // spinner
         }
