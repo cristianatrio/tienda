@@ -8,7 +8,8 @@
       "descripcion": "grogu es un pijama creado de starwars",
       "cantidad": "20",
       "precio": " 67.52 ",
-      "imagen": "grogu.jpeg"
+      "imagen": "grogu.jpeg",
+      "url": "https://imgur.com/eM92sxH"
     },
     {
       "codigo": "3121",
@@ -19,7 +20,9 @@
       "titulo": "Más vendido",
       "cantidad": "20",
       "precio": " 67.52 ",
-      "imagen": "lilo.jpeg"
+      "imagen": "lilo.jpeg",
+      "url": "https://imgur.com/DYhqubC"
+
     },
     {
       "codigo": "3122",
@@ -29,7 +32,8 @@
       "descripcion": "Stranger Things es una seria creada por netflix",
       "cantidad": "20",
       "precio": " 72.21 ",
-      "imagen": "strangerthings.jpeg"
+      "imagen": "strangerthings.jpeg",
+      "url": "https://imgur.com/SRHP3Eq"
     }
 
     
