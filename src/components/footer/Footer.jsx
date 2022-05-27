@@ -18,7 +18,6 @@ const Footer = () => {
                         <div className="col item social">
                             <a href="#"><FaFacebook/></a>
                             <a href="#"><FaTwitter/></a>
-                            <a href="#"><FaSnapchat/></a>
                             <a href="#"><RiInstagramFill/></a>
                         </div>
                     </div>

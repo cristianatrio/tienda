@@ -6,12 +6,12 @@ const ProductTipo = () => {
   const location = useLocation()
   const {tipo} = useParams()
 
-  console.log('location => ', location)
-  console.log('tipo => ', tipo)
+  // console.log('location => ', location)
+  // console.log('tipo => ', tipo)
   
   return (
-    <div className='tienda Airkids'>
-        <ItemListContainer titulo="Tienda Airkids" 
+    <div className='productTipo'>
+        <ItemListContainer titulo="Tienda airkids Pijamas" 
                            tipo={tipo} />
     </div>
   )
