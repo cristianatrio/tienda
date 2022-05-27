@@ -4,33 +4,32 @@ import ItemList from '../itemList/ItemList.jsx';
 import Loader from '../Loader/Loader.jsx';
 
 // Firebase
-import { db } from '../../services/firebase.js'
+import { db } from '../../services/firebase'
 import { collection, getDocs, query, where, orderBy } from "firebase/firestore"
 
 const ItemListContainer = ( {titulo, tipo} ) => {
 
-  console.log('tipo ==> ', tipo);
+  
 
   const [productos, setProductos] = useState([]);
 
-
-  // obtiene la collection 'productos' del cloude firestore de Firebase
+  
   const getProductos = async (tipo) => {
 
     const coleccion = collection(db, 'productos')
 
     try {
 
-      if (tipo === undefined) {           // no hay filtro (todos los productos)
-         var data = await getDocs(coleccion)
+      if (tipo === undefined) {         
+        
         var q = query(coleccion, orderBy("tipo"), orderBy("subtipo"), orderBy("codigo"))
-      } else {                           // filtra por tipo
+      } else {                       
         var q = query(coleccion, where("tipo", "==", tipo), orderBy("subtipo"), orderBy("codigo"))
       }
 
-        data = await getDocs(q)
-
-      // console.log(data.docs.map(doc => doc = {id: doc.id, ...doc.data()}))
+      const data = await getDocs(q)
+              
+     
       setProductos(data.docs.map(doc => doc = {id: doc.id, ...doc.data()}))
 
     } catch (error) {
@@ -38,13 +37,14 @@ const ItemListContainer = ( {titulo, tipo} ) => {
     }
   };
 
+  
   useEffect(() => {
-    // setTimeout(getProductos, 1000);  
+ 
     getProductos(tipo);  
   }, [tipo])  
-  // }, [])  
+    
 
-   console.log('ItemListContainer productos', productos)
+
 
   return (
     <div className='itemListContainer container pt-5'>
@@ -52,7 +52,7 @@ const ItemListContainer = ( {titulo, tipo} ) => {
         { productos.length > 0 ? 
             <ItemList productos={productos} tipo={tipo} />
         : 
-            <Loader/>     // spinner
+            <Loader/>     
         }
     </div>
   )

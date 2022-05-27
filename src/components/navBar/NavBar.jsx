@@ -1,83 +1,76 @@
 import { Link } from 'react-router-dom'
 import CartWidget from '../cartWidget/CartWidget.jsx'
-import logo from '../../logo.png.png'
+import logo from '../../components/navBar/logo.png.png'
 import './NavBar.css';
 const NavBar = () => {
 
   return (
-    <div className='navBar'>
-      <nav className="navbar navbar-expand-sm navbar-dark bg-primary fixed-top mb-5">
-        <div className="container-fluid mx-3">
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon" />
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNavDropdown" >
-            <Link to="/" className="text-decoration-none" >
-              <a className="navbar-brand">
-                <img alt="" src={logo} width="60" height="60"
-                  className="d-inline-block align-center" />
-                &nbsp;&nbsp;&nbsp;Tienda Airkids
-              </a>
-            </Link>
-            <ul className="navbar-nav mx-auto mb-2 mb-lg-0" style={{ fontSize: "120%" }} >
-              <li className="nav-item px-2">
+    <div className='navBar my-3 pb-3'>
+        <nav className="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
+            <div className="container-fluid mx-3">
                 <Link to="/" className="text-decoration-none" >
-                  <a className="nav-link" aria-current="page" >
-                    Home
-                  </a>
+                    <a className="navbar-brand">
+                        <img alt="" src={logo} width="60" height="60"
+                            className="d-inline-block align-center" />
+                        &nbsp;&nbsp;&nbsp;Tienda Airkids
+                    </a>
                 </Link>
-              </li>
-              <li className="nav-item px-2">
-                <Link to="/nosotros" className="text-decoration-none" >
-                  <a className="nav-link" >
-                    Sobre Nosotros
-                  </a>
-                </Link>
-              </li>
-              <li className="nav-item dropdown px-2">
-                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
-                  role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Productos
-                </a>
-                <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <li>
-                    <Link to='tipo/cortos' className="text-decoration-none" >
-                      <a className="dropdown-item" >
-                        Cortos
-                      </a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to='tipo/largos' className="text-decoration-none" >
-                      <a className="dropdown-item" >
-                        Largos
-                      </a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to='tipo/mediaestacion' className="text-decoration-none" >
-                      <a className="dropdown-item" >
-                        Media Estacion
-                      </a>
-                    </Link>
-                  </li>
-                  <li><hr className="/dropdown-divider" /></li>
-                  <li>
-                    <Link to="/productos" className="text-decoration-none" >
-                      <a className="dropdown-item" >
-                        Todos los Productos
-                      </a>
-                    </Link>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-          <CartWidget />
-        </div>
-      </nav>
+                <button type="button" className="navbar-toggler" data-bs-toggle="collapse" 
+                        data-bs-target="#navbarCollapse">
+                    <span className="navbar-toggler-icon" />
+                </button>
+                <div className="collapse navbar-collapse" id="navbarCollapse">
+                    <div className="navbar-nav ms-auto" style={{ fontSize: "140%" }}>
+                        <div className="nav-item px-2"> 
+                            <Link to="/" className="text-decoration-none" >
+                                <a className="nav-link" aria-current="page" >
+                                    Home
+                                </a>
+                            </Link>
+                        </div>
+                        <div className="nav-item px-2">
+                            <Link to="/nosotros" className="text-decoration-none" >
+                                <a className="nav-link" >
+                                    Sobre Nosotros
+                                </a>
+                            </Link>
+                        </div>
+                        <div className="nav-item dropdown px-2">
+                            <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                Productos
+                            </a>
+                            <div className="dropdown-menu" style={{ fontSize: "100%" }}>
+                                <Link to="/tipo/lampara" className="text-decoration-none" >
+                                    <a className="dropdown-item" >
+                                        Pijamas Cortos
+                                    </a>
+                                </Link>
+                                <Link to="/tipo/luminaria" className="text-decoration-none" >
+                                    <a className="dropdown-item" >
+                                        Media Estacion
+                                    </a>
+                                </Link>
+                                <Link to="/tipo/proyector" className="text-decoration-none" >
+                                    <a className="dropdown-item" >
+                                       Pijamas Largos
+                                    </a>
+                                </Link>
+                                {/* linea divisoria */}
+                                <hr className="dropdown-divider" />
+                                <Link to="/productos" className="text-decoration-none" >
+                                    <a className="dropdown-item" >
+                                        Todos los Productos
+                                    </a>
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="navbar-nav ms-auto">
+                        <CartWidget />
+                    </div>
+                </div>
+            </div>
+        </nav>
     </div>
   );
 }

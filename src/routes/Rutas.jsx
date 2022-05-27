@@ -1,8 +1,8 @@
 import React from 'react'
-import { BrowserRouter, Route, Routes} from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Layout from '../components/Layout.jsx'
 import Home from '../views/Home.jsx'
-
+// import ProductList from '../views/ProductList'
 import ProductDetail from '../views/ProductDetail.jsx'
 import ProductTipo from './../views/ProductTipo.jsx'
 import Nosotros from '../views/Nosotros.jsx'
@@ -17,11 +17,11 @@ const Rutas = () => {
             <Routes>
                 <Route path="/" element={<Layout />}> 
                     <Route index element={<Home />} />  
-                    
-                     <Route path="/productos" element={<ProductTipo />} />  
-                    <Route path="/tipo/ :tipo" element={<ProductTipo />} />  
-                    <Route path="/producto/:codigo" element={<ProductDetail />} />  
-                  
+                    {/* <Route path="/productos" element={<ProductList />} />   */}
+                    <Route path="/productos" element={<ProductTipo />} />  
+                    <Route path="/tipo/:tipo" element={<ProductTipo />} />  
+                    {/* <Route path="/producto/:codigo" element={<ProductDetail />} />   */}
+                    <Route path="/producto/:id" element={<ProductDetail />} />  
                     <Route path="/nosotros" element={<Nosotros />} />  
                     <Route path="/cart" element={<Cart />} />
                     <Route path="/checkout" element={<Checkout />} />

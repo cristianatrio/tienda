@@ -51,7 +51,7 @@ const ItemDetailCointainer = ({ id }) => {
   // obtiene lista de productos simulando que tarda 3 segundos
   useEffect(() => {
     getProductoPorId();      
-  }, [])  
+  }, [id])  
 
 
   return (
