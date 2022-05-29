@@ -40,17 +40,17 @@ const NavBar = () => {
                                 Productos
                             </a>
                             <div className="dropdown-menu" style={{ fontSize: "100%" }}>
-                                <Link to="/tipo/lampara" className="text-decoration-none" >
+                                <Link to="/tipo/Cortos" className="text-decoration-none" >
                                     <a className="dropdown-item" >
                                         Pijamas Cortos
                                     </a>
                                 </Link>
-                                <Link to="/tipo/luminaria" className="text-decoration-none" >
+                                <Link to="/tipo/MediaEstacion" className="text-decoration-none" >
                                     <a className="dropdown-item" >
                                         Media Estacion
                                     </a>
                                 </Link>
-                                <Link to="/tipo/proyector" className="text-decoration-none" >
+                                <Link to="/tipo/Largos" className="text-decoration-none" >
                                     <a className="dropdown-item" >
                                        Pijamas Largos
                                     </a>

@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Layout from '../components/Layout.jsx'
 import Home from '../views/Home.jsx'
-// import ProductList from '../views/ProductList'
+
 import ProductDetail from '../views/ProductDetail.jsx'
 import ProductTipo from './../views/ProductTipo.jsx'
 import Nosotros from '../views/Nosotros.jsx'
