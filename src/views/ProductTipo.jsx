@@ -1,13 +1,12 @@
 import React from 'react'
 import { useLocation, useParams } from 'react-router-dom'
-import ItemListContainer from './../components/itemListContainer/ItemListContainer.jsx';
+import ItemListContainer from './../components/ItemListContainer/ItemListContainer.jsx';
 
 const ProductTipo = () => {
   const location = useLocation()
   const {tipo} = useParams()
 
-  // console.log('location => ', location)
-  // console.log('tipo => ', tipo)
+
   
   return (
     <div className='productTipo'>
