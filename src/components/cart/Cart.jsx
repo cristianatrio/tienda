@@ -4,14 +4,16 @@ import { BsFillCartXFill } from 'react-icons/bs'
 import { MdDelete } from 'react-icons/md'
 import { formatPriceNumber } from '../../utils/Utils.js'
 import Formulario from './../formulario/Formulario.jsx';
-// import './Cart.css';
+import { Link } from "react-router-dom";
+
+
 
 const Cart = () => {
 
     const { contextCart, contextItemsCart, precioTotalCart, 
                                  removeFromCart, clearCart } = useContext(GlobalContext); 
    
-    // console.log(contextItemsCart(), precioTotalCart(), contextCart)
+    //let imagen = '/images/'+item.producto.imagen');
 
     const ListadoCarrito = () => {
 
@@ -19,47 +21,55 @@ const Cart = () => {
             <div className='cart'>
                 <div className='listado'>
                     <div className="container-fluid pt-5">
-                        <div className="row tituloListado fw-bold pb-2" >
-                            <div className="col-1 text-center overflow-hidden">Cantidad</div>
-                            <div className="col-1 text-center overflow-hidden">Código</div>
-                            <div className="col-5 text-start">Descripcion</div>
-                            <div className="col-2 text-end">Precio Unitario</div>
-                            <div className="col-2 text-end">Total Producto</div>
-                        </div>
+                        
                         <div>
                             {contextCart.map((item, index) => (
-                                <div className="row text-secondary align-items-center" key={index} >
-                                    <div className="col-1 text-center">{item.cantidad}</div>
-                                    <div className="col-1 text-center">{item.producto.codigo}</div>
-                                    <div className="col-5 text-start">{item.producto.descripcion}</div>
-                                    <div className="col-2 text-end">{formatPriceNumber(item.producto.precio)}</div>
-                                    <div className="col-2 text-end">{formatPriceNumber((item.cantidad * item.producto.precio))}</div>
-                                    <div className="col-1 my-1" > 
-                                        <button type="button" title="Eliminar Item"
+                              
+                                <div className="card p-1 m-auto mt-2 mb-2 col-11 col-md-6 col-lg-4 " key={index}>
+                                    <div className="container">
+                                        <div className="row m-auto col-12">
+                                            
+                                            <img src={'/images/'+item.producto.imagen} className="card-img-top img-fluid img1" />
+                                            <div className="card-body text-center p-2">
+                                                <h5 className="card-title">{item.producto.nombre}</h5>
+                                                <h6 className="card-text">Cantidad: {item.cantidad}</h6>
+                                                <h6 className="card-text">{formatPriceNumber((item.producto.precio))}</h6>
+                                            </div>
+                                            <button type="button" title="Eliminar Item"
                                                 className="btn btn-primary py-1"
                                                 onClick={() => removeFromCart(item.producto.codigo)}>
                                             <MdDelete />
                                         </button>
+                                            <Link
+                                                className="btn btn-primary p-2 col-12 col-md-6 m-2"
+                                                to={`/productos
+                                                `}
+                                            >
+                                                Agregar más
+                                            </Link>
+                                        </div>
                                     </div>
                                 </div>
                             ))
                             }  
                         </div>
                         <div className="row pieListado fw-bold pt-2" >
-                            <div className="col-9 text-end">
+                            <div className="col-9 text-center">
                                 TOTAL :
                             </div>
-                            <div className="col-2 text-end">
+                            <div className="col-2 text-center">
                                 {formatPriceNumber(precioTotalCart())}
                             </div>
                         </div>
                     </div>
-                    <div className="btnVaciar py-5" > 
-                        <button type="button" className="btn btn-warning" 
+                    <div className="btnVaciar py-5" >
+                        <button type="button" className="btn btn-warning"
                             onClick={() => clearCart()}>
                             <BsFillCartXFill />{" "}Vaciar carrito
                         </button>
+
                     </div>
+                    
                 </div>
 
                 <div className="buyer container pt-5">
@@ -78,7 +88,12 @@ const Cart = () => {
                 { contextItemsCart() > 0 ?
                     <ListadoCarrito/>
                 : 
-                    <h3>El carrito está vacio</h3>
+                    <><h3>El carrito está vacio</h3><Link className="btn btn-primary p-2 col-12 col-md-6 m-2" to={`/`}> Volver a la tienda
+
+                    </Link></>
+
+
+
                 }
             </div>
         </div>
