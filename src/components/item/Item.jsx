@@ -9,11 +9,9 @@ const Item = ({ producto }) => {
 
   let nombre = producto.nombre === undefined ? `${blank}` : producto.nombre 
   let descripcion = producto.descripcion;
-  // let titulo = producto.titulo; 
+  
    let imagen = '/images/' + ( producto.imagen === undefined ? 'imagen_no_disponible.jpg' : producto.imagen);
-  //let imagen = ( producto.url === undefined ? '/images/imagen_no_disponible.jpg' 
-                                            //: formatGoogleSharedUrl(producto.id));
-  // let stock = producto.cantidad;
+
 
   return (
     <div className="item" style={{ display: "flex", padding: 30, alignItems: "center" }}>

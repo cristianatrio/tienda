@@ -40,13 +40,7 @@ const Cart = () => {
                                                 onClick={() => removeFromCart(item.producto.codigo)}>
                                             <MdDelete />
                                         </button>
-                                            <Link
-                                                className="btn btn-primary p-2 col-12 col-md-6 m-2"
-                                                to={`/productos
-                                                `}
-                                            >
-                                                Agregar más
-                                            </Link>
+                               
                                         </div>
                                     </div>
                                 </div>
@@ -67,7 +61,13 @@ const Cart = () => {
                             onClick={() => clearCart()}>
                             <BsFillCartXFill />{" "}Vaciar carrito
                         </button>
-
+                        <Link
+                                                className="btn btn-primary p-1"
+                                                to={`/productos
+                                                `}
+                                            >
+                                                Agregar más
+                                            </Link>
                     </div>
                     
                 </div>
