@@ -3,50 +3,45 @@ import { Link } from 'react-router-dom';
 import { BsFillCartPlusFill, BsFillCartCheckFill, BsFillCartFill } from 'react-icons/bs';
 import { GlobalContext } from '../../context/GlobalProvider.jsx';
 import ItemCount from '../itemCount/ItemCount.jsx';
-import { formatGoogleSharedUrl, formatPriceNumber } from '../../utils/Utils.js'
+import { formatPriceNumber } from '../../utils/Utils.js'
 import './ItemDetail.css';
 
 const ItemDetail = ( { producto } ) => {
 
-  // console.log(JSON.stringify(producto));
+
 
   const blank = '\u00A0';
 
   const { addToCart, isInCart } = useContext(GlobalContext); 
   
-  // const [enableAdd, setEnableAdd] = useState(true);
-  // const [enableAdd, setEnableAdd] = useState(isInCart(producto.codigo));
+
   const [cantidad, setCantidad] = useState(0);
 
   let nombre = producto.nombre === undefined ? `${blank}` : producto.nombre 
   let imagen = '/images/' + ( producto.imagen === undefined ? 'imagen_no_disponible.jpg' : producto.imagen);
- // let imagen = ( producto.url === undefined ? '/images/imagen_no_disponible.jpg' 
-                                         //   : formatGoogleSharedUrl(producto.url));
+
   let stock = producto.cantidad;
 
 
   const onAdd = (cantidad) => {
-    // console.log(`ItemCount ${index} tiene ${cantidad} items`);
+
     setCantidad(cantidad);
   };
 
   const agregarAlCarrito = (cantidad) => {
-    // const mensaje = `Se agregaran ${JSON.stringify(cantidad)} items del producto 
-    //                  ${producto.codigo} - ${producto.nombre} al carrito`;
-    // console.log(mensaje);
-    // alert(mensaje);
+
+
     addToCart(producto, cantidad)
-    // setEnableAdd(false)
+
   };
 
   const goToCart = () => {
     const mensaje = `Se finaliza la compra, redirecciona al carrito...`;
-    // console.log(mensaje);
-    // alert(mensaje);
+
   };
 
   const volver = () => {
-    // console.log('ejecuta volver()...')
+
     window.history.back()
   }
 

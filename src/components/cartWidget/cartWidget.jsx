@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { GlobalContext } from '../../context/GlobalProvider.jsx';
 
 
+
 const CartWidget = () => {
 
   const { contextItemsCart } = useContext(GlobalContext); 
@@ -12,10 +13,10 @@ const CartWidget = () => {
 
   return (
 
-    <div className='cartWidget mx-5'>
-      <Link to={'/cart'} >
-        <FaShoppingCart size={20} color={'#eef5ff'} />&nbsp;&nbsp; 
-        <span style={{color: '#88bafe'}}>{contextItemsCart}</span>
+    <div className='cartWidget mx-5  textNone ml-1 p-1'>
+      <Link to={'/cart'} style={{ textDecoration: "none", color: "black" }}>
+        <FaShoppingCart size={30} color={'#FFFFFF'} /> 
+        <span style={{color: '#FFFFFF'} } >{contextItemsCart()}</span>
       </Link>
     </div> 
    

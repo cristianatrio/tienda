@@ -16,14 +16,14 @@ const Item = ({ producto }) => {
   // let stock = producto.cantidad;
 
   return (
-    <div className="item" style={{ display: "block", padding: 30, alignItems: "center" }}>
+    <div className="item" style={{ display: "flex", padding: 30, alignItems: "center" }}>
       <div className="card text-center w-100" border="info" >
         <div className="card-header" style={{ fontWeight: 500 }}>
             {nombre}
         </div>
         <img variant="card-img-top" src={imagen} style={{ padding: 20 }} />        
         <div className="card-body">
-          <div className="card-text" style={{ height: "3rem" }}>
+          <div className="card-text text-capitalize " style={{ height: "4rem" }}>
             {descripcion}
           </div>
         </div>

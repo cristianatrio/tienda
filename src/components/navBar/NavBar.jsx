@@ -6,12 +6,12 @@ const NavBar = () => {
 
   return (
     <div className='navBar my-3 pb-3'>
-        <nav className="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-to ">
             <div className="container-fluid mx-3">
                 <Link to="/" className="text-decoration-none" >
                     <a className="navbar-brand">
-                        <img alt="" src={logo} width="60" height="60"
-                            className="d-inline-block align-center" />
+                        <img alt="logo" src={logo} width="60" height="60"
+                            className="logod-inline-block align-center" />
                         &nbsp;&nbsp;&nbsp;Tienda Airkids
                     </a>
                 </Link>
@@ -65,7 +65,7 @@ const NavBar = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="navbar-nav ms-auto">
+                    <div className="navbar-nav">
                         <CartWidget />
                     </div>
                 </div>
