@@ -7,18 +7,18 @@ const ItemCount = ({ initial = 1, stock, onAdd }) => {
 
   const [cantidad, setCantidad] = useState(initial);
 
-  // console.log('onAdd(cantidad)...', cantidad);
+  
   onAdd(cantidad);
 
   const decrement = () => {
-    // console.log('decremento...', cantidad);
+ 
     if (cantidad > 1) {
       setCantidad(cantidad - 1);  
     }
   };
 
   const increment = () => {
-    // console.log('incremento...', cantidad);
+ 
     if (cantidad < stock) {
       setCantidad(cantidad + 1);
     }

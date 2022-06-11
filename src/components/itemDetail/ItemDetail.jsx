@@ -49,11 +49,11 @@ const ItemDetail = ( { producto } ) => {
     return (
       <div className='botones container d-flex justify-content-end gap-5 my-4'>
         <div className="boton">
-            {/* { enableAdd ?  */}
+     
             { !isInCart(producto.codigo) ? 
               <div className="btnAdd" > 
                 <button type="button" className="btn btn-primary" 
-                        // onClick={() => handleOnAdd(itemsCarrito)}>
+                        
                         onClick={() => agregarAlCarrito(cantidad)}>
                     <BsFillCartPlusFill />{" "}Agregar al carrito
                 </button>
@@ -63,7 +63,7 @@ const ItemDetail = ( { producto } ) => {
                 <Link to={`/cart`} className="btn btn-warning"
                         onClick={() => goToCart()}>
                     <BsFillCartCheckFill />{" "}Finalizar compra
-                </Link>    {/* link a vista ProductDetail  */}
+                </Link>   
               </div>
             }
         </div>

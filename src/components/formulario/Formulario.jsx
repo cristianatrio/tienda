@@ -29,18 +29,18 @@ const Formulario = ( { itemsCompra, totalCompra} ) => {
         buyer: {nombre, apellido, direccion, email, telefono}
     } = formulario;
     
-    // valida que ningun campo este vacío   
+  
     const validarCampos = (campos) => {
         return !(Object.values(campos).some((campo) => campo === ""))
     }
   
-    // guarda el ticket de compra en la coleccion "ordenes" en firebase    
+   
     const guardarTicketCompra =  async (formulario) => {
       try {
           const coleccion = collection(db, "ordenes")
           const ordenCompra = await addDoc(coleccion, formulario)
           toast.success(`Su compra a sido registrada con el id: ${ordenCompra.id}`)
-          // toast.success(`Su compra a sido registrada con el id...`)
+         
       } catch (error) {
           console.log(error)
       }
@@ -50,9 +50,9 @@ const Formulario = ( { itemsCompra, totalCompra} ) => {
     const onSubmit = (e) => {
       e.preventDefault();
   
-      console.log('formulario => ', formulario)
+      
   
-      // if (validarCampos( [nombre, apellido, direccion, email, telefono] )) {
+     
       if (validarCampos(formulario.buyer)) {
           guardarTicketCompra(formulario)
           setTimeout(clearCart, 4000)
@@ -70,7 +70,7 @@ const Formulario = ( { itemsCompra, totalCompra} ) => {
               [name]: value
           },
       });
-      // console.log(formulario)
+
     };
   
     const handleBlur = (e) => {

@@ -49,11 +49,9 @@ const Cart = () => {
                         </div>
                         <div className="row pieListado fw-bold pt-2" >
                             <div className="col-9 text-center">
-                                TOTAL :
+                                {'TOTAL:'+''+formatPriceNumber(precioTotalCart())}
                             </div>
-                            <div className="col-2 text-center">
-                                {formatPriceNumber(precioTotalCart())}
-                            </div>
+                         
                         </div>
                     </div>
                     <div className="btnVaciar py-5" >
@@ -62,7 +60,7 @@ const Cart = () => {
                             <BsFillCartXFill />{" "}Vaciar carrito
                         </button>
                         <Link
-                                                className="btn btn-primary p-1"
+                                                className="btn btn-primary py-1"
                                                 to={`/productos
                                                 `}
                                             >

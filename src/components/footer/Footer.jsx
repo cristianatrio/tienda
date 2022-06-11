@@ -5,7 +5,7 @@ import './Footer.css';
 
 const Footer = () => {
     return (
-        <div className="footer  bg-white text-black">
+        <div className="footer  bg-black text-white">
             <footer>
                 <div className="container">
                     <div className="row">
@@ -20,7 +20,7 @@ const Footer = () => {
                             <a href="https://www.instagram.com/airkids2/?hl=es-la"><RiInstagramFill/></a>
                         </div>
                     </div>
-                    <p className="copyright">Tienda Airkids  © 2022</p>
+                    <p className="copyright">Tienda Airkids  © 2022 / Desarrollado por Cristian Atrio</p>
                 </div>
             </footer>
         </div>
