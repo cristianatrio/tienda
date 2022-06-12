@@ -27,7 +27,7 @@ const Formulario = ( { itemsCompra, totalCompra} ) => {
   const [error, setError] = useState ({});
 
   const {
-      buyer: {nombre, apellido, direccion, email, telefono}
+      buyer: {nombre, apellido, direccion, email, telefono }
   } = formulario;
   
  
@@ -51,7 +51,7 @@ const Formulario = ( { itemsCompra, totalCompra} ) => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    console.log('formulario => ', formulario)
+   
 
    
     if (validarCampos(formulario.buyer)) {
@@ -85,56 +85,85 @@ const Formulario = ( { itemsCompra, totalCompra} ) => {
 
 
   return (
-    <div className='formulario'>
-        <form onSubmit={onSubmit} className="container border px-5 py-3 ">
-            <h2 className="pb-4">Datos del comprador</h2>
-            <div className="row mb-4">
-                <div className="col">
-                    <div className="form-floating">
-                        <input type="text" name="nombre" className="form-control" 
-                               onChange={handleChange} onBlur={handleBlur}
-                               placeholder="Nombre" value={nombre}/>
-                        <label className="form-label text-left" htmlFor="nombre">Nombre</label>
-                    </div>
-                </div>
-                <div className="col">
-                    <div className="form-floating">
-                        <input type="text" name="apellido" className="form-control" 
-                               onChange={handleChange} onBlur={handleBlur}
-                               placeholder="Apellido" value={apellido} />
-                        <label className="form-label" htmlFor="apellido">Apellido</label>
-                    </div>
-                </div>
-            </div>
+    <div className='formulario '>
+        <form onSubmit={onSubmit} className="container border solid ">
+            <h2 className="pt-4 text-overflow: hidden">Datos del comprador</h2>
 
-            {/* Dirección */}
-            <div className="form-floating mb-4">
-                <input type="text" name="direccion" className="form-control" 
-                       onChange={handleChange} onBlur={handleBlur}
-                       placeholder="Direccion" value={direccion} />
-                <label className="form-label" htmlFor="direccion">Dirección</label>
-            </div>
+            <div className="row text-center">
+                    <div className="col-md-12">
+                      <div className="form-group p-2">
+                        <input
+                          type="text"
+                          className="form-control"
+                          onChange={handleChange} onBlur={handleBlur}
+                          name="nombre"
+                          placeholder="Nombre"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
 
-            <div className="row mb-4">
-                <div className="col">
-                    {/* Email input */}
-                    <div className="form-floating">
-                        <input type="email" name="email" className="form-control" 
-                               onChange={handleChange} onBlur={handleBlur}
-                               placeholder="Email" value={email} />
-                        <label className="form-label" htmlFor="email">Email</label>
+                  <div className="row text-center">
+                    <div className="col-md-12">
+                      <div className="form-group p-2">
+                        <input
+                          type="text"
+                          className="form-control"
+                          onChange={handleChange} onBlur={handleBlur}
+                          name="apellido"
+                          placeholder="apellido"
+                          required
+                        />
+                      </div>
                     </div>
-                </div>
-                <div className="col">
-                    {/* Telefono input */}
-                    <div className="form-floating">
-                        <input type="text" name="telefono" className="form-control" 
-                               onChange={handleChange} onBlur={handleBlur}
-                               placeholder="Telefono" value={telefono} />
-                        <label className="form-label" htmlFor="telefono">Teléfono</label>
+                  </div>
+
+                  <div className="row text-center">
+                    <div className="col-md-12">
+                      <div className="form-group p-2">
+                        <input
+                          type="text"
+                          className="form-control"
+                          onChange={handleChange} onBlur={handleBlur}
+                          name="direccion"
+                          placeholder="direccion"
+                          required
+                        />
+                      </div>
                     </div>
-                </div>
-            </div>
+                  </div>
+
+                  <div className="row text-center">
+                    <div className="col-md-12">
+                      <div className="form-group p-2">
+                        <input
+                          type="text"
+                          className="form-control"
+                          onChange={handleChange} onBlur={handleBlur}
+                          name="email"
+                          placeholder="email"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+            
+                  <div className="row text-center">
+                    <div className="col-md-12">
+                      <div className="form-group p-2">
+                        <input
+                          type="text"
+                          className="form-control"
+                          onChange={handleChange} onBlur={handleBlur}
+                          name="telefono"
+                          placeholder="telefono"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
 
             {/* Submit button */}
             <button type="submit" className="btn btn-success btn-block my-4">

@@ -47,12 +47,12 @@ const ItemDetail = ( { producto } ) => {
 
   const Botones = () => {
     return (
-      <div className='botones container d-flex justify-content-end gap-5 my-4'>
+      <div className='botones container d-flex justify-content-center gap-4 my-2'>
         <div className="boton">
      
             { !isInCart(producto.codigo) ? 
               <div className="btnAdd" > 
-                <button type="button" className="btn btn-primary" 
+                <button type="button" className="btn btn-primary btn-sm" 
                         
                         onClick={() => agregarAlCarrito(cantidad)}>
                     <BsFillCartPlusFill />{" "}Agregar al carrito
@@ -60,7 +60,7 @@ const ItemDetail = ( { producto } ) => {
               </div>
             : 
               <div className="btnCart" > 
-                <Link to={`/cart`} className="btn btn-warning"
+                <Link to={`/cart`} className="btn btn-warning btn-sm"
                         onClick={() => goToCart()}>
                     <BsFillCartCheckFill />{" "}Finalizar compra
                 </Link>   
@@ -78,7 +78,7 @@ const ItemDetail = ( { producto } ) => {
 
   return (
 
-      <div className='itemDetail'>
+      <div className='itemDetail m-2 p-1 container-fluid col-md-6 mx-auto d-block'>
         <div className="content">
           {/* Header */}
           <div className="modal-header">
@@ -92,7 +92,7 @@ const ItemDetail = ( { producto } ) => {
             <div className="row centrado d-flex align-items-center" >
               {/* Imagen producto */}
               <div className="col-md-4">
-                <img width="200" height="200" src={imagen} />
+                <img  src={imagen} class="img-fluid" />
               </div>
               {/* Detalle producto */}
               <div className="col-md-8 p-4">

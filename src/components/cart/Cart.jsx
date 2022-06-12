@@ -54,7 +54,7 @@ const Cart = () => {
                          
                         </div>
                     </div>
-                    <div className="btnVaciar py-5" >
+                    <div className="btnVaciar py-3" >
                         <button type="button" className="btn btn-warning"
                             onClick={() => clearCart()}>
                             <BsFillCartXFill />{" "}Vaciar carrito
