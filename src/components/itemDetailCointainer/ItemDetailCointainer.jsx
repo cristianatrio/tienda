@@ -1,68 +1,26 @@
-import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
+import { useState, useEffect } from 'react';
 import ItemDetail from '../itemDetail/ItemDetail.jsx';
 import Loader from '../Loader/Loader.jsx';
+import { db } from '../../services/firebase.js';
+import { doc, getDoc } from 'firebase/firestore';
 
-// Firebase
-import { db } from '../../services/firebase.js'
-import { doc, getDoc } from "firebase/firestore"
-
-// const ItemDetailCointainer = ({ codigo }) => {
-const ItemDetailCointainer = ({ id }) => {
-
-  // console.log('codigo: ', codigo);
-  // console.log('id: ', id);
-
-  // const [productos, setProductos] = useState([]);
-  const [producto, setProducto] = useState();
-
-  // const getProductoPorId = async () => {
-  //   try {
-  //     const response = await axios.get('/data/productos.json')
-  //     const productos = response.data.productos;
-  //     // console.log('esto es lo que hay en productos...');
-  //     // console.log(productos);
-
-  //     const productoEncontrado = productos.find(item => item.codigo === codigo)
-  //     // console.log(`productoEncontrado => ${JSON.stringify(productoEncontrado)}`)
-  //     setProducto(productoEncontrado)
-      
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-
-  const getProductoPorId = async () => {
-
-    const item = doc(db, 'productos', id)
-
-    try {
-        // const docSnapshot = await getDoc(item)
-        const docSnapshot = await getDoc(item)
-        if (docSnapshot.exists()) {
-          setProducto({id: docSnapshot.id, ...docSnapshot.data()})
-        }
-    } catch (error) {
-        console.log(error);
-    }
-  };
-
-  // obtiene lista de productos simulando que tarda 3 segundos
+export default function ItemDetailCointainer({ id }) {
+  const [state, setState] = useState({ loading: true });
   useEffect(() => {
-    getProductoPorId();      
-  }, [id])  
-
-
-  return (
-    <div className='itemDetailContainer container pt-5'>
-        {producto ? 
-            <ItemDetail producto={producto} /> 
-        : 
-          <Loader/>     // spinner
-        }
-    </div>
-  )
+    let active = true;
+    setState({ loading: true });
+    getDoc(doc(db, 'productos', id)).then(snapshot => {
+      if (active) setState(snapshot.exists()
+        ? { producto: { ...snapshot.data(), id: snapshot.id } }
+        : { error: 'Este producto no existe.' });
+    }).catch(() => {
+      if (active) setState({ error: 'No pudimos cargar el producto. Intentá nuevamente.' });
+    });
+    return () => { active = false; };
+  }, [id]);
+  return <div className="itemDetailContainer container pt-5">
+    {state.loading ? <Loader/> : state.error
+      ? <p role="alert">{state.error}</p>
+      : <ItemDetail key={id} producto={state.producto}/>}
+  </div>;
 }
-
-export default ItemDetailCointainer;

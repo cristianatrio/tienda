@@ -1,12 +1,12 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useRef } from 'react'
 
 import { GlobalContext } from '../../context/GlobalProvider.jsx'
 import { BsBagCheckFill } from 'react-icons/bs'
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 // Firebase
 import { db } from '../../services/firebase.js'
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 const Formulario = ( { itemsCompra, totalCompra} ) => {
 
@@ -25,6 +25,9 @@ const Formulario = ( { itemsCompra, totalCompra} ) => {
   });
 
   const [error, setError] = useState ({});
+  const [sending, setSending] = useState(false);
+  const submitting = useRef(false);
+  const [emailConfirm, setEmailConfirm] = useState("");
 
   const {
       buyer: {nombre, apellido, direccion, email, telefono}
@@ -32,36 +35,32 @@ const Formulario = ( { itemsCompra, totalCompra} ) => {
   
   // valida que ningun campo este vacío   
   const validarCampos = (campos) => {
-      return !(Object.values(campos).some((campo) => campo === ""))
+      return !(Object.values(campos).some((campo) => typeof campo !== "string" || campo.trim() === ""))
   }
 
-  // guarda el ticket de compra en la coleccion "ordenes" en firebase    
-  const guardarTicketCompra =  async (formulario) => {
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    if (submitting.current) return;
+    if (email.trim() !== emailConfirm.trim() || !validarCampos(formulario.buyer) || !itemsCompra.length || totalCompra <= 0) {
+      toast.error('Completá los datos y agregá productos al carrito.');
+      return;
+    }
+    submitting.current = true;
+    setSending(true);
     try {
-        const coleccion = collection(db, "ordenes")
-        const ordenCompra = await addDoc(coleccion, formulario)
-        toast.success(`Su compra a sido registrada con el id: ${ordenCompra.id}`)
-        // toast.success(`Su compra a sido registrada con el id...`)
-    } catch (error) {
-        console.log(error)
+      const buyer = Object.fromEntries(Object.entries(formulario.buyer).map(([key, value]) => [key, value.trim()]));
+      const order = await addDoc(collection(db, "ordenes"), {
+        buyer, total: totalCompra, items: itemsCompra, fecha: serverTimestamp(), estado: "generada"
+      });
+      toast.success(`Compra registrada: ${order.id}`);
+      clearCart();
+    } catch {
+      toast.error('No pudimos registrar la compra. Tu carrito se conserva; intentá nuevamente.');
+    } finally {
+      submitting.current = false;
+      setSending(false);
     }
   };
-
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-
-    console.log('formulario => ', formulario)
-
-    // if (validarCampos( [nombre, apellido, direccion, email, telefono] )) {
-    if (validarCampos(formulario.buyer)) {
-        guardarTicketCompra(formulario)
-        setTimeout(clearCart, 4000)
-    } else {
-        toast.error('Por favor llene todos los campos del formulario')
-    }
-  }
-  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormulario({
@@ -91,7 +90,7 @@ const Formulario = ( { itemsCompra, totalCompra} ) => {
             <div className="row mb-4">
                 <div className="col">
                     <div className="form-floating">
-                        <input type="text" name="nombre" className="form-control" 
+                        <input type="text" id="nombre" required maxLength={200} disabled={sending} name="nombre" className="form-control" 
                                onChange={handleChange} onBlur={handleBlur}
                                placeholder="Nombre" value={nombre}/>
                         <label className="form-label text-left" htmlFor="nombre">Nombre</label>
@@ -99,7 +98,7 @@ const Formulario = ( { itemsCompra, totalCompra} ) => {
                 </div>
                 <div className="col">
                     <div className="form-floating">
-                        <input type="text" name="apellido" className="form-control" 
+                        <input type="text" id="apellido" required maxLength={200} disabled={sending} name="apellido" className="form-control" 
                                onChange={handleChange} onBlur={handleBlur}
                                placeholder="Apellido" value={apellido} />
                         <label className="form-label" htmlFor="apellido">Apellido</label>
@@ -109,7 +108,7 @@ const Formulario = ( { itemsCompra, totalCompra} ) => {
 
             {/* Dirección */}
             <div className="form-floating mb-4">
-                <input type="text" name="direccion" className="form-control" 
+                <input type="text" id="direccion" required maxLength={200} disabled={sending} name="direccion" className="form-control" 
                        onChange={handleChange} onBlur={handleBlur}
                        placeholder="Direccion" value={direccion} />
                 <label className="form-label" htmlFor="direccion">Dirección</label>
@@ -119,7 +118,7 @@ const Formulario = ( { itemsCompra, totalCompra} ) => {
                 <div className="col">
                     {/* Email input */}
                     <div className="form-floating">
-                        <input type="email" name="email" className="form-control" 
+                        <input type="email" id="email" required maxLength={200} disabled={sending} name="email" className="form-control" 
                                onChange={handleChange} onBlur={handleBlur}
                                placeholder="Email" value={email} />
                         <label className="form-label" htmlFor="email">Email</label>
@@ -128,7 +127,7 @@ const Formulario = ( { itemsCompra, totalCompra} ) => {
                 <div className="col">
                     {/* Telefono input */}
                     <div className="form-floating">
-                        <input type="text" name="telefono" className="form-control" 
+                        <input type="text" id="telefono" required maxLength={200} disabled={sending} name="telefono" className="form-control" 
                                onChange={handleChange} onBlur={handleBlur}
                                placeholder="Telefono" value={telefono} />
                         <label className="form-label" htmlFor="telefono">Teléfono</label>
@@ -136,12 +135,12 @@ const Formulario = ( { itemsCompra, totalCompra} ) => {
                 </div>
             </div>
 
-            {/* Submit button */}
-            <button type="submit" className="btn btn-success btn-block my-4">
+            <label htmlFor="emailConfirm">Repetir email</label><input id="emailConfirm" type="email" required maxLength={200} disabled={sending} className="form-control" value={emailConfirm} onChange={(e) => setEmailConfirm(e.target.value)} />
+            <button type="submit" disabled={sending} aria-busy={sending} className="btn btn-success btn-block my-4">
                 <BsBagCheckFill/>{" "}Terminar compra
             </button>
 
-            <Toaster/>
+            
 
         </form>
     </div>

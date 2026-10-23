@@ -1,3 +1,4 @@
+import { Toaster } from 'react-hot-toast';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Rutas from './routes/Rutas.jsx';
@@ -7,7 +8,7 @@ const App = () => {
   return (
     <div className="App">
       <GlobalProvider>
-          <Rutas/>
+          <Rutas/><Toaster/>
       </GlobalProvider>
     </div>
   );

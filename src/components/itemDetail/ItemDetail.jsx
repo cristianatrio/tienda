@@ -16,7 +16,7 @@ const ItemDetail = ( { producto } ) => {
   
   // const [enableAdd, setEnableAdd] = useState(true);
   // const [enableAdd, setEnableAdd] = useState(isInCart(producto.codigo));
-  const [cantidad, setCantidad] = useState(0);
+  const [cantidad, setCantidad] = useState(1);
 
   let nombre = producto.nombre === undefined ? `${blank}` : producto.nombre 
   let imagen = '/images/' + ( producto.imagen === undefined ? 'imagen_no_disponible.jpg' : producto.imagen);
@@ -59,7 +59,7 @@ const ItemDetail = ( { producto } ) => {
               <div className="btnAdd" > 
                 <button type="button" className="btn btn-primary" 
                         // onClick={() => handleOnAdd(itemsCarrito)}>
-                        onClick={() => agregarAlCarrito(cantidad)}>
+                        disabled={!stock || cantidad > stock} onClick={() => agregarAlCarrito(cantidad)}>
                     <BsFillCartPlusFill />{" "}Agregar al carrito
                 </button>
               </div>
@@ -97,7 +97,7 @@ const ItemDetail = ( { producto } ) => {
             <div className="row centrado d-flex align-items-center" >
               {/* Imagen producto */}
               <div className="col-md-4">
-                <img width="200" height="200" src={imagen} />
+                <img width="200" height="200" src={imagen} alt={nombre} />
               </div>
               {/* Detalle producto */}
               <div className="col-md-8 p-4">
