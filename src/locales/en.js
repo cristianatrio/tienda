@@ -22,6 +22,7 @@ export default {
     cartUnits: (n) => (n === 1 ? "item" : "items"),
     language: "Language",
     night: "Night mode",
+    motion: "Animations",
   },
   categories: {
     Cortos: "Short pajamas",
@@ -174,7 +175,7 @@ export default {
       },
       {
         term: "Motion with a purpose",
-        text: "Text that appears as you read, page transitions and photos that fly into the cart. Everything stops with reduced motion or the pause button.",
+        text: "Text that appears as you read, page transitions, photos that fly into the cart and stars that follow your phone’s tilt. When the system asks for less motion, everything fades without moving; the animations switch decides.",
       },
       {
         term: "Tested on every change",

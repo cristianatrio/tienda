@@ -36,13 +36,14 @@ Abrí la dirección indicada en la terminal. Cambiá el idioma con **Español / 
 - **Español e inglés**: detecta el idioma del navegador, recuerda la elección y actualiza textos, `lang` del documento, títulos de página y formato de precios.
 - **Modo noche**: sigue la preferencia del sistema o el botón de la luz. La noche se extiende en un círculo desde el interruptor, las estrellas del techo titilan y cada tanto cruza una estrella fugaz.
 - **Movimiento**: titulares que suben palabra por palabra, textos y fotos que aparecen al bajar, fichas que se inclinan hacia el cursor con un reflejo (de noche, una linterna), la foto que viaja de la ficha al detalle, el pijama que vuela al carrito y fichas que se reacomodan al filtrar u ordenar.
-- Todo el movimiento respeta la preferencia de movimiento reducido. La cinta de excusas para no dormir tiene un botón de pausa que detiene todas las animaciones continuas y se recuerda (WCAG 2.2.2).
+- **En el celular**: las estrellas de la portada siguen el giro del teléfono, las fotos se acomodan al entrar en pantalla y la ficha se hunde bajo el dedo al tocarla.
+- **Animaciones a elección**: siguen la preferencia del sistema, como el tema. Si pide menos movimiento, los textos y las fotos se funden sin desplazarse y las pantallas cambian con un fundido. El interruptor de la barra superior, o la pausa de la cinta de excusas (WCAG 2.2.2), cambia de modo y se recuerda.
 - Búsqueda, categorías y orden por precio.
 - Agregado rápido desde el catálogo, con aviso para lectores de pantalla.
 - Detalle y cantidades limitadas por stock, también editables dentro del carrito.
 - Carrito persistente: guarda solo IDs y cantidades, nunca datos del comprador.
 - Estados de carga, error, catálogo vacío, producto inexistente y página 404.
-- Navegación por teclado, etiquetas visibles, foco visible y movimiento reducido.
+- Navegación por teclado, etiquetas visibles, foco visible y modo de movimiento calmo.
 - Confirmación de email con error junto al campo, bloqueo de doble envío y recuperación de errores.
 - Firebase opcional: validación de precios en servidor y descuento transaccional de stock.
 - CI y actualización de dependencias.
@@ -60,9 +61,9 @@ Abrí la dirección indicada en la terminal. Cambiá el idioma con **Español / 
 | [Vitest](https://vitest.dev/) y [Testing Library](https://testing-library.com/)      | Pruebas de comportamiento.                                         |
 | [Playwright](https://playwright.dev/) y [axe](https://github.com/dequelabs/axe-core) | Recorridos completos y accesibilidad automática.                   |
 
-Las traducciones son diccionarios propios en lugar de una librería de i18n: con dos idiomas y 139 textos por idioma, un contexto de React evita dependencias y una prueba garantiza que ambos idiomas tengan las mismas claves. Un script mínimo en `index.html` aplica idioma y tema antes del primer pintado para evitar destellos. La demo no depende de servicios externos.
+Las traducciones son diccionarios propios en lugar de una librería de i18n: con dos idiomas y 140 textos por idioma, un contexto de React evita dependencias y una prueba garantiza que ambos idiomas tengan las mismas claves. Un script mínimo en `index.html` aplica idioma, tema y modo de movimiento antes del primer pintado para evitar destellos. La demo no depende de servicios externos.
 
-Las animaciones usan solo APIs del navegador: CSS, IntersectionObserver, View Transitions, animaciones ligadas al scroll y Web Animations. Suman unos 5 KB comprimidos entre JS y CSS, sin librerías. Donde el navegador no admite una API, la página funciona igual sin ese efecto. `BrowserRouter` usa `useTransitions={false}` para que el cambio de ruta se pinte dentro de la transición de vista.
+Las animaciones usan solo APIs del navegador: CSS, IntersectionObserver, View Transitions, animaciones ligadas al scroll, Web Animations y la orientación del dispositivo. `html[data-motion]` vale `full` o `calm` y el CSS elige la coreografía según ese valor. Suman unos 5 KB comprimidos entre JS y CSS, sin librerías. Donde el navegador no admite una API, la página funciona igual sin ese efecto. `BrowserRouter` usa `useTransitions={false}` para que el cambio de ruta se pinte dentro de la transición de vista.
 
 ## Estructura
 
@@ -71,7 +72,8 @@ Las animaciones usan solo APIs del navegador: CSS, IntersectionObserver, View Tr
 - src/components/: encabezado, portada, ficha de producto y piezas compartidas.
 - src/i18n.jsx y src/locales/: idioma activo y textos en español e inglés.
 - src/theme.jsx y src/preferences.js: modo noche y preferencias guardadas.
-- src/motion.js, src/useReveal.js, src/usePointerVars.js y src/useTransitionClick.js: transiciones de vista, apariciones al hacer scroll, posición del cursor y vuelo al carrito.
+- src/motion.js, src/useReveal.js, src/usePointerVars.js, src/useDeviceTilt.js y src/useTransitionClick.js: transiciones de vista, apariciones al hacer scroll, posición del cursor, giro del celular y vuelo al carrito.
+- src/motionPreference.jsx: modo de movimiento (completo o calmo) según el sistema o la elección guardada.
 - src/cart.js y src/useCart.js: reglas inmutables y persistencia del carrito.
 - src/data.js: catálogo demo y validaciones.
 - src/services.js: adaptador demo/Firebase con carga bajo demanda.

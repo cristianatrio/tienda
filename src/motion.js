@@ -1,28 +1,29 @@
-const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
 const FLIGHT_MS = 720;
 let latestTransition = 0;
 
-export function prefersReducedMotion() {
-  return window.matchMedia?.(REDUCED_MOTION).matches ?? false;
+/**
+ * html[data-motion] is set before the first paint (index.html) and by MotionProvider.
+ * "calm" keeps fades and light; only "full" moves things around.
+ */
+export function fullMotion() {
+  return document.documentElement.dataset.motion === "full";
 }
 
-/** Scroll reveals need IntersectionObserver and a visitor who accepts motion. */
+/** Scroll reveals play in both modes (calm ones only fade), so they only need the observer. */
 export function canReveal() {
-  return "IntersectionObserver" in window && !prefersReducedMotion();
+  return "IntersectionObserver" in window;
 }
 
 /**
  * Runs a DOM update inside a View Transition when the browser supports it.
- * html[data-vt] names the transition so the CSS can choose its choreography.
+ * html[data-vt] names the transition so the CSS can choose its choreography;
+ * in calm mode the CSS keeps only the cross-fade.
  * @param {() => void} update
  * @param {"page" | "filter" | "theme"} type
  * @returns {ViewTransition | null}
  */
 export function runTransition(update, type) {
-  if (
-    typeof document.startViewTransition !== "function" ||
-    prefersReducedMotion()
-  ) {
+  if (typeof document.startViewTransition !== "function") {
     update();
     return null;
   }
@@ -60,7 +61,7 @@ export function flyToCart(source) {
     !source ||
     !target ||
     typeof source.animate !== "function" ||
-    prefersReducedMotion()
+    !fullMotion()
   )
     return;
   const from = source.getBoundingClientRect();

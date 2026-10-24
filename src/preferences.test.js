@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { detectLanguage, detectTheme } from "./preferences.js";
+import { detectLanguage, detectMotion, detectTheme } from "./preferences.js";
 
 describe("preferencias del visitante", () => {
   it("usa el idioma guardado antes que el del navegador", () => {
@@ -19,5 +19,17 @@ describe("preferencias del visitante", () => {
     expect(detectTheme("night", false)).toBe("night");
     expect(detectTheme(null, true)).toBe("night");
     expect(detectTheme("sepia", false)).toBe("day");
+  });
+
+  it("usa la elección de animaciones guardada y si no, la del sistema", () => {
+    expect(detectMotion("full", true)).toBe("full");
+    expect(detectMotion("calm", false)).toBe("calm");
+    expect(detectMotion(null, false)).toBe("full");
+    expect(detectMotion(null, true)).toBe("calm");
+  });
+
+  it("entiende la pausa guardada por la versión anterior", () => {
+    expect(detectMotion("paused", false)).toBe("calm");
+    expect(detectMotion("running", true)).toBe("full");
   });
 });

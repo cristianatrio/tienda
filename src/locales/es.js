@@ -22,6 +22,7 @@ export default {
     cartUnits: (n) => (n === 1 ? "producto" : "productos"),
     language: "Idioma",
     night: "Modo noche",
+    motion: "Animaciones",
   },
   categories: {
     Cortos: "Pijamas cortos",
@@ -179,7 +180,7 @@ export default {
       },
       {
         term: "Movimiento con propósito",
-        text: "Textos que aparecen al leer, transiciones entre páginas y fotos que vuelan al carrito. Todo se detiene con movimiento reducido o con el botón de pausa.",
+        text: "Textos que aparecen al leer, transiciones entre páginas, fotos que vuelan al carrito y estrellas que siguen el giro del celular. Si el sistema pide menos movimiento, todo se funde sin desplazarse; el interruptor de animaciones decide.",
       },
       {
         term: "Probado en cada cambio",

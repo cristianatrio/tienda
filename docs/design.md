@@ -38,7 +38,8 @@ Curvas: `--out` (salida suave) para entradas y `--spring` (pequeño rebote) para
 - Acciones: el pijama vuela en arco hasta el contador, que lo recibe con un pulso. Al filtrar, ordenar o quitar del carrito, los elementos se reacomodan en lugar de saltar.
 - Pantallas de aviso: una luna que dormita en las páginas sin salida y una ronda de estrellas al completar el pedido.
 - Encabezado: sombra al bajar y una línea manteca que marca cuánto se leyó.
-- Con movimiento reducido, todo aparece en su lugar sin animación. Las animaciones continuas se detienen con el botón de pausa de la cinta, que se recuerda entre visitas.
+- Celular: las estrellas de la portada siguen el giro del teléfono (en iOS quedan quietas, porque pedir permiso para un adorno no se justifica). Las fotos crecen hasta su tamaño al entrar en pantalla y la ficha se hunde bajo el dedo.
+- Modo calmo: es el punto de partida si el sistema pide menos movimiento. Los textos y las fotos se funden en su lugar, las pantallas y el cambio de luz usan un fundido, y la barra de lectura sigue al scroll. No hay desplazamientos, parallax, bucles ni vuelos. El interruptor de la barra superior y la pausa de la cinta cambian de modo, y la elección se recuerda.
 
 ## Fotografía
 

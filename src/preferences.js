@@ -1,6 +1,7 @@
 // The inline script in index.html mirrors these rules to avoid a flash before React loads.
 export const LANGUAGES = ["es", "en"];
 export const THEMES = ["day", "night"];
+export const MOTIONS = ["full", "calm"];
 export const LANGUAGE_KEY = "airkids-lang";
 export const THEME_KEY = "airkids-theme";
 export const MOTION_KEY = "airkids-motion";
@@ -26,6 +27,21 @@ export function detectLanguage(stored, browserLanguages) {
 export function detectTheme(stored, prefersDark) {
   if (THEMES.includes(stored)) return stored;
   return prefersDark ? "night" : "day";
+}
+
+// The first motion layer stored a pause switch; keep honoring it.
+const LEGACY_MOTION = { running: "full", paused: "calm" };
+
+/**
+ * "calm" keeps fades and light, without movement or loops.
+ * @param {string | null} stored
+ * @param {boolean} prefersReduced
+ * @returns {"full" | "calm"}
+ */
+export function detectMotion(stored, prefersReduced) {
+  if (MOTIONS.includes(stored)) return stored;
+  if (Object.hasOwn(LEGACY_MOTION, stored ?? "")) return LEGACY_MOTION[stored];
+  return prefersReduced ? "calm" : "full";
 }
 
 /**

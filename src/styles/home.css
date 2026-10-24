@@ -23,9 +23,8 @@
   position: absolute;
   color: var(--sticker);
   stroke: var(--sticker-edge);
-  /* --px/--py follow the pointer over the hero; closer stickers drift further. */
-  translate: calc(-50% + var(--px, 0) * var(--depth, 0px))
-    calc(-50% + var(--py, 0) * var(--depth, 0px));
+  /* With full motion they drift with the pointer or the phone's tilt (styles/motion.css). */
+  translate: -50% -50%;
   rotate: var(--turn);
   transition:
     color 0.6s var(--ease),

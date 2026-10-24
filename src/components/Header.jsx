@@ -4,6 +4,7 @@ import { useI18n } from "../i18n.jsx";
 import { isDemo } from "../services.js";
 import { useTheme } from "../theme.jsx";
 import { BrandMark } from "./BrandMark.jsx";
+import { MotionSwitch } from "./MotionSwitch.jsx";
 import { TransitionLink } from "./TransitionLink.jsx";
 
 const LANGUAGE_OPTIONS = [
@@ -66,6 +67,7 @@ export function Header({ cartCount }) {
           {isDemo ? t.demoBar.demo : t.demoBar.live}{" "}
           <TransitionLink to="/nosotros">{t.demoBar.more}</TransitionLink>
         </p>
+        <MotionSwitch />
       </div>
       <header className="site-header">
         <TransitionLink className="brand" to="/" aria-label={t.nav.home}>

@@ -5,7 +5,7 @@ const OPTIONS = { rootMargin: "0px 0px -8% 0px", threshold: 0.12 };
 
 /**
  * Marks an element visible the first time it scrolls into view.
- * Without IntersectionObserver, or with reduced motion, content is visible from the start.
+ * Without IntersectionObserver, content is visible from the start. Calm mode reveals with a fade.
  * @returns {[import("react").RefObject<HTMLElement>, boolean]}
  */
 export function useReveal() {

@@ -1,6 +1,8 @@
 import { Moon, Sun } from "lucide-react";
+import { useRef } from "react";
 import { useI18n } from "../i18n.jsx";
 import { useTheme } from "../theme.jsx";
+import { useDeviceTilt } from "../useDeviceTilt.js";
 import { usePointerVars } from "../usePointerVars.js";
 import { GlowStars } from "./GlowStars.jsx";
 import { SplitText } from "./SplitText.jsx";
@@ -9,9 +11,16 @@ export function Hero() {
   const { t } = useI18n();
   const { theme, toggleTheme } = useTheme();
   const pointer = usePointerVars();
+  const hero = useRef(null);
+  useDeviceTilt(hero);
   const night = theme === "night";
   return (
-    <section className="hero" aria-labelledby="hero-title" {...pointer}>
+    <section
+      ref={hero}
+      className="hero"
+      aria-labelledby="hero-title"
+      {...pointer}
+    >
       <GlowStars />
       <span className="shooting-star" aria-hidden="true" />
       <div className="hero-copy">

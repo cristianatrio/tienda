@@ -1,8 +1,31 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
-const noViolations = async (page) =>
+// Fades and entrances run in both motion modes; axe checks the page once they settle.
+// Loops and scroll-linked animations (reading progress) never finish and keep their colors.
+async function settled(page) {
+  await page.evaluate(
+    () =>
+      new Promise((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(resolve)),
+      ),
+  );
+  await page.waitForFunction(() =>
+    document
+      .getAnimations()
+      .every(
+        (a) =>
+          a.playState !== "running" ||
+          !(a.timeline instanceof DocumentTimeline) ||
+          a.effect?.getTiming().iterations === Infinity,
+      ),
+  );
+}
+
+const noViolations = async (page) => {
+  await settled(page);
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+};
 
 test("catálogo, carrito persistente, checkout y accesibilidad", async ({
   page,
@@ -13,6 +36,8 @@ test("catálogo, carrito persistente, checkout y accesibilidad", async ({
   await page.getByRole("heading", { name: "Grogu" }).getByRole("link").click();
   await page.getByRole("button", { name: "Agregar al carrito" }).click();
   await page.getByRole("link", { name: "Ver mi carrito" }).click();
+  // Navigation runs inside a view transition, a frame after the click.
+  await expect(page).toHaveURL(/\/cart$/);
   await page.reload();
   await expect(page.getByRole("heading", { name: "Mi carrito" })).toBeVisible();
   for (const label of ["Nombre", "Apellido", "Teléfono"])
@@ -128,17 +153,10 @@ test.describe("visitante que acepta animaciones", () => {
     await pause.click();
     await expect(pause).toHaveAttribute("aria-pressed", "true");
     await page.reload();
-    await expect(page.locator("html")).toHaveAttribute("data-motion", "paused");
-    // Once the entrance has played, the animated page must pass axe too.
-    await page.waitForFunction(() =>
-      document
-        .getAnimations()
-        .every(
-          (a) =>
-            a.playState !== "running" ||
-            !(a.timeline instanceof DocumentTimeline),
-        ),
-    );
+    await expect(page.locator("html")).toHaveAttribute("data-motion", "calm");
+    await expect(
+      page.getByRole("button", { name: "Animaciones", exact: true }),
+    ).toHaveAttribute("aria-pressed", "false");
     await noViolations(page);
 
     await page.getByRole("heading", { name: "Lilo" }).getByRole("link").click();
@@ -146,5 +164,70 @@ test.describe("visitante que acepta animaciones", () => {
     await expect(
       page.getByRole("heading", { name: "Lilo", level: 1 }),
     ).toBeVisible();
+  });
+});
+
+test("con menos movimiento en el sistema, todo se funde y se puede activar", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await expect(page.locator("html")).toHaveAttribute("data-motion", "calm");
+  const heading = page.getByRole("heading", {
+    name: "El día termina. La aventura sigue.",
+  });
+  await expect(heading).toHaveClass(/is-visible/);
+  await page.getByRole("button", { name: "Agregar Grogu al carrito" }).click();
+  await expect(page.locator(".fly-clone")).toHaveCount(0);
+
+  const motion = page.getByRole("button", { name: "Animaciones", exact: true });
+  await motion.click();
+  await expect(motion).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator("html")).toHaveAttribute("data-motion", "full");
+  await page.reload();
+  await expect(page.locator("html")).toHaveAttribute("data-motion", "full");
+  await page.getByRole("button", { name: "Agregar Lilo al carrito" }).click();
+  await expect(page.locator(".fly-clone")).toHaveCount(1);
+  await noViolations(page);
+});
+
+test.describe("en el celular", () => {
+  test.use({
+    reducedMotion: "no-preference",
+    isMobile: true,
+    hasTouch: true,
+    viewport: { width: 390, height: 844 },
+  });
+  test("las calcomanías siguen el giro y las fotos se acomodan al bajar", async ({
+    page,
+  }, testInfo) => {
+    test.skip(testInfo.project.name !== "mobile", "Una sola corrida táctil");
+    await page.goto("/");
+    const hero = page.locator(".hero");
+    await expect(hero).toBeVisible();
+    for (const [beta, gamma] of [
+      [40, 0],
+      [50, 20],
+    ]) {
+      await page.evaluate(
+        ([b, g]) =>
+          window.dispatchEvent(
+            new DeviceOrientationEvent("deviceorientation", {
+              beta: b,
+              gamma: g,
+            }),
+          ),
+        [beta, gamma],
+      );
+    }
+    await expect
+      .poll(() => hero.evaluate((el) => el.style.getPropertyValue("--px")))
+      .toBe("0.800");
+    const scrollLinked = await page
+      .locator(".product-photo img")
+      .first()
+      .evaluate((img) =>
+        img.getAnimations().some((a) => a.animationName === "photo-in"),
+      );
+    expect(scrollLinked).toBe(true);
   });
 });

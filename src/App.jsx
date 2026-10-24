@@ -8,6 +8,7 @@ import { About } from "./pages/About.jsx";
 import { Cart } from "./pages/Cart.jsx";
 import { Catalog } from "./pages/Catalog.jsx";
 import { Detail } from "./pages/Detail.jsx";
+import { MotionProvider } from "./motionPreference.jsx";
 import { loadCatalog } from "./services.js";
 import { ThemeProvider } from "./theme.jsx";
 import { useCart } from "./useCart.js";
@@ -157,7 +158,9 @@ export default function App() {
   return (
     <I18nProvider>
       <ThemeProvider>
-        <Store />
+        <MotionProvider>
+          <Store />
+        </MotionProvider>
       </ThemeProvider>
     </I18nProvider>
   );

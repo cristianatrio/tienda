@@ -1,28 +1,17 @@
 import { Pause, Play, Star } from "lucide-react";
-import { useLayoutEffect, useState } from "react";
 import { useI18n } from "../i18n.jsx";
-import { MOTION_KEY, readStored, writeStored } from "../preferences.js";
+import { useMotion } from "../motionPreference.jsx";
 
 const COPIES = [0, 1];
 
 /**
- * Scrolling band of bedtime excuses. The pause button stops it and every other
- * looping animation (WCAG 2.2.2) and is remembered between visits.
+ * Scrolling band of bedtime excuses. Its pause button (WCAG 2.2.2) switches the
+ * whole site to calm motion, the same setting as the switch in the top bar.
  */
 export function Marquee() {
   const { t } = useI18n();
-  const [paused, setPaused] = useState(
-    () => readStored(MOTION_KEY) === "paused",
-  );
-  useLayoutEffect(() => {
-    const root = document.documentElement;
-    if (paused) root.dataset.motion = "paused";
-    else delete root.dataset.motion;
-  }, [paused]);
-  function toggle() {
-    writeStored(MOTION_KEY, paused ? "running" : "paused");
-    setPaused(!paused);
-  }
+  const { motion, toggleMotion } = useMotion();
+  const paused = motion !== "full";
   // Each copy repeats the phrases so it is wider than the screen and the loop never shows a gap.
   const phrases = [...t.marquee.items, ...t.marquee.items];
   return (
@@ -47,7 +36,7 @@ export function Marquee() {
         aria-label={t.marquee.pause}
         aria-pressed={paused}
         title={t.marquee.pause}
-        onClick={toggle}
+        onClick={toggleMotion}
       >
         {paused ? (
           <Play aria-hidden="true" size={16} />
