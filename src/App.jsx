@@ -56,45 +56,68 @@ function Catalog({ products }) {
     <>
       {!category && (
         <section className="hero">
-          <div>
-            <span className="eyebrow">AIRKIDS · TIEMPO DE DESCANSAR</span>
+          <div className="hero-copy">
+            <span className="eyebrow">
+              <span aria-hidden="true">✦</span> PARA PEQUEÑOS GRANDES SOÑADORES
+            </span>
             <h1>
-              Pequeñas aventuras.
+              El día termina.
               <br />
-              <em>Grandes sueños.</em>
+              La aventura
+              <br />
+              <em>sigue.</em>
             </h1>
             <p>
-              Pijamas con personajes favoritos, para las noches de historias y
-              los domingos sin apuro.
+              Sus personajes favoritos también se van a dormir. Encontrá el
+              pijama para la próxima historia.
             </p>
             <a className="button" href="#coleccion">
-              Encontrá tu favorito <span aria-hidden="true">↗</span>
+              Descubrí los pijamas <span aria-hidden="true">↗</span>
             </a>
-            <span className="hero-note">
-              Una colección para soñar despiertos.
-            </span>
+            <div className="hero-note">
+              <span aria-hidden="true">☾</span> El uniforme oficial de los cinco
+              minutitos más.
+            </div>
           </div>
           <div className="hero-photo">
-            <ProductImage
-              product={products[0] || { nombre: "", imagen: "grogu.jpeg" }}
+            <img
+              src="/images/airkids-bedroom.png"
+              alt="Una cama con luz cálida, un osito y ropa de descanso azul"
+              fetchpriority="high"
+              width="1536"
+              height="1024"
             />
             <span className="photo-stamp">
-              Modo
+              Pequeños
               <br />
-              descanso ☾
+              rituales.
+              <br />
+              <strong>Grandes sueños.</strong>
+            </span>
+            <span className="scene-note">
+              Universo AirKids · imagen de ambiente
             </span>
           </div>
         </section>
       )}
+      {!category && (
+        <div className="mood-bar" aria-label="La colección">
+          <span>PERSONAJES FAVORITOS</span>
+          <span aria-hidden="true">✦</span>
+          <span>NOCHES CON HISTORIA</span>
+          <span aria-hidden="true">✦</span>
+          <span>DOMINGOS EN PIJAMA</span>
+        </div>
+      )}{" "}
       <section id="coleccion" className="collection">
         <div className="section-heading">
           <div>
-            <span className="eyebrow">LA COLECCIÓN</span>
+            <span className="eyebrow">EL CLUB DEL PIJAMA</span>
             <h1>
               {category
                 ? categories.find((c) => c.id === category)?.name ||
                   "Categoría no encontrada"
-                : "Tus próximas noches favoritas"}
+                : "Elegí su próxima aventura"}
             </h1>
           </div>
           <span>{filtered.length} diseños</span>
@@ -134,7 +157,10 @@ function Catalog({ products }) {
           <div className="product-grid">
             {filtered.map((p) => (
               <article className="product-card" key={p.id}>
-                <Link to={`/item/${p.id}`} className="product-photo">
+                <Link
+                  to={`/item/${p.id}`}
+                  className={`product-photo tone-${p.tipo}`}
+                >
                   <ProductImage product={p} loading="lazy" />
                   <span>
                     {categories.find((c) => c.id === p.tipo)?.name || p.tipo}
@@ -145,12 +171,13 @@ function Catalog({ products }) {
                     <h2>
                       <Link to={`/item/${p.id}`}>{p.nombre}</Link>
                     </h2>
-                    <p>
-                      {p.cantidad ? "Para tu próximo descanso" : "Sin stock"}
-                    </p>
+                    <p>{p.cantidad ? "Conjunto de dos piezas" : "Sin stock"}</p>
                   </div>
                   <strong>{money(p.precio)}</strong>
                 </div>
+                <Link className="card-action" to={`/item/${p.id}`}>
+                  Ver pijama <span aria-hidden="true">↗</span>
+                </Link>
               </article>
             ))}
           </div>
@@ -163,8 +190,10 @@ function Catalog({ products }) {
       <section className="story-strip">
         <span aria-hidden="true">☾</span>
         <div>
-          <h2>El mejor plan empieza en pijama.</h2>
-          <p>Una tienda pequeña, con espacio para grandes sueños.</p>
+          <h2>Menos pantallas. Más historias.</h2>
+          <p>
+            Un cuento más, un abrazo largo y ese pijama que no se quiere sacar.
+          </p>
         </div>
         <Link to="/nosotros">Conocé el proyecto →</Link>
       </section>
@@ -520,7 +549,7 @@ export default function App() {
       </div>
       <header>
         <Link className="brand" to="/" aria-label="AirKids, inicio">
-          airkids<span aria-hidden="true">✳</span>
+          airkids<span aria-hidden="true">☾</span>
         </Link>
         <button
           className="menu-toggle"
@@ -654,7 +683,7 @@ export default function App() {
       </main>
       <footer>
         <Link className="brand" to="/">
-          airkids<span aria-hidden="true">✳</span>
+          airkids<span aria-hidden="true">☾</span>
         </Link>
         <p>Pequeñas aventuras. Grandes sueños.</p>
         <div>
@@ -667,3 +696,4 @@ export default function App() {
     </>
   );
 }
+

@@ -81,3 +81,5 @@ npm run build genera dist/. netlify.toml configura compilación, rutas SPA y enc
 ## Seguridad y créditos
 
 Ver [SECURITY.md](SECURITY.md). Las imágenes y nombres de personajes se conservan como material académico original; no se afirma tener derechos comerciales sobre ellos. No se agregó una licencia a recursos de terceros.
+
+La portada de ambiente fue generada con IA. Las fotos de producto siguen siendo las originales; se presentan completas y sin ampliación excesiva. Tipografías locales: Manrope y DM Sans mediante Fontsource. Ver [dirección visual](docs/design.md).
