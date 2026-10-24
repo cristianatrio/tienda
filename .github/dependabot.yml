@@ -1,13 +1,28 @@
 version: 2
 updates:
+  # Major npm upgrades (React, ESLint, jsdom) change APIs and peer ranges,
+  # so they are done by hand as planned migrations. Dependabot only proposes
+  # minor and patch versions, grouped into one pull request per folder.
   - package-ecosystem: npm
     directory: /
     schedule:
       interval: weekly
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    groups:
+      minor-and-patch:
+        update-types: [minor, patch]
   - package-ecosystem: npm
     directory: /functions
     schedule:
       interval: weekly
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    groups:
+      minor-and-patch:
+        update-types: [minor, patch]
   - package-ecosystem: github-actions
     directory: /
     schedule:
