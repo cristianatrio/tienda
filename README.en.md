@@ -1,5 +1,7 @@
 # AirKids · Little adventures, big dreams
 
+**Live demo: [tiendaairkids2.netlify.app](https://tiendaairkids2.netlify.app)**
+
 [Versión en español](README.md)
 
 A kids’ pajama store built by **Cristian Atrio**, grown from his final React project at Coderhouse. Catalog, categories, a persistent cart and checkout, in Spanish and English, with a night mode and a responsive layout for desktop and mobile.
