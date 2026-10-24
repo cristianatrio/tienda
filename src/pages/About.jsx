@@ -8,7 +8,7 @@ const REPOSITORY = "https://github.com/cristianatrio/tienda";
 const PROFILE = "https://github.com/cristianatrio";
 const COLUMN_DELAY_MS = 140;
 const STACK = [
-  "React 18",
+  "React 19",
   "React Router",
   "Vite",
   "Firebase",

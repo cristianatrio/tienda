@@ -57,7 +57,7 @@ export function Hero() {
         <img
           src="/images/airkids-bedroom.png"
           alt={t.hero.photoAlt}
-          fetchpriority="high"
+          fetchPriority="high"
           width="1536"
           height="1024"
         />
