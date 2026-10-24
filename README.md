@@ -1,5 +1,7 @@
 # AirKids · Pequeñas aventuras, grandes sueños
 
+**Demo en vivo: [tiendaairkids2.netlify.app](https://tiendaairkids2.netlify.app)**
+
 [English version](README.en.md)
 
 Tienda de pijamas creada por **Cristian Atrio**, a partir de su proyecto final de React para Coderhouse. Catálogo, categorías, carrito persistente y checkout, en español e inglés, con modo noche y una interfaz adaptable a escritorio y celular.
