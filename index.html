@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1b2550" />
+    <meta
+      name="description"
+      content="AirKids: una tienda de pijamas hecha con React, en español e inglés. Explorá la colección y probá una compra de demostración."
+    />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <title>AirKids: pijamas para soñar</title>
+    <script>
+      // Mirrors src/preferences.js so language, theme and motion are right before the first paint.
+      (function () {
+        var root = document.documentElement,
+          lang,
+          theme,
+          motion;
+        try {
+          lang = localStorage.getItem("airkids-lang");
+          theme = localStorage.getItem("airkids-theme");
+          motion = localStorage.getItem("airkids-motion");
+        } catch (e) {}
+        var prefers = function (query) {
+          return !!(window.matchMedia && matchMedia(query).matches);
+        };
+        var browser =
+          (navigator.languages && navigator.languages[0]) ||
+          navigator.language ||
+          "es";
+        root.lang =
+          lang === "es" || lang === "en"
+            ? lang
+            : browser.toLowerCase().indexOf("es") === 0
+              ? "es"
+              : "en";
+        root.dataset.theme =
+          theme === "day" || theme === "night"
+            ? theme
+            : prefers("(prefers-color-scheme: dark)")
+              ? "night"
+              : "day";
+        root.dataset.motion =
+          motion === "full" || motion === "running"
+            ? "full"
+            : motion === "calm" || motion === "paused"
+              ? "calm"
+              : prefers("(prefers-reduced-motion: reduce)")
+                ? "calm"
+                : "full";
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

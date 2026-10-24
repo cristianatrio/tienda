@@ -1,0 +1,335 @@
+.skip {
+  position: fixed;
+  z-index: 50;
+  top: -100px;
+  left: 16px;
+  padding: 12px 18px;
+  border-radius: var(--radius-field);
+  background: var(--surface);
+  color: var(--ink);
+  font-weight: 650;
+}
+.skip:focus {
+  top: 12px;
+}
+
+.demo-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px 16px;
+  background: var(--bar-bg);
+  color: var(--bar-ink);
+  font-size: var(--step--1);
+  text-align: center;
+  padding: 6px var(--gutter);
+}
+.motion-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  padding: 0 6px 0 10px;
+  border: 1px solid color-mix(in srgb, var(--bar-ink) 40%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  font-weight: 650;
+}
+.motion-switch:hover {
+  border-color: var(--bar-ink);
+}
+.motion-switch:focus-visible {
+  outline: 2px solid var(--bar-ink);
+  outline-offset: 2px;
+}
+/* A small switch shows the state; the button's pressed state carries it for screen readers. */
+.switch-track {
+  position: relative;
+  width: 30px;
+  height: 18px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bar-ink) 30%, transparent);
+  transition: background-color 0.2s;
+}
+.switch-track::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--bar-ink);
+  transition: translate 0.25s var(--spring);
+}
+.motion-switch[aria-pressed="true"] .switch-track {
+  background: var(--butter);
+}
+.motion-switch[aria-pressed="true"] .switch-track::after {
+  translate: 12px 0;
+  background: var(--on-butter);
+}
+.demo-bar a {
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px 32px;
+  padding: 12px max(var(--gutter), (100% - var(--page)) / 2);
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.brand {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  color: var(--ink);
+  text-decoration: none;
+}
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.12em;
+  font-size: 1.875rem;
+  font-variation-settings: var(--casual);
+  font-weight: 900;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+.brand-mark svg {
+  color: var(--moon);
+  transform: rotate(-18deg) translateY(-0.08em);
+}
+.main-nav {
+  display: flex;
+  gap: 4px;
+}
+.main-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 550;
+}
+.main-nav a:hover {
+  background: var(--surface-alt);
+}
+.main-nav a.active {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.45em;
+}
+.header-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.language-switch {
+  display: inline-flex;
+  padding: 2px;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+}
+.language-switch button {
+  min-width: 44px;
+  min-height: 40px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.lang-short {
+  display: none;
+}
+.language-switch button[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--bg);
+}
+.theme-toggle,
+.cart-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink);
+}
+.theme-toggle:hover,
+.cart-link:hover {
+  border-color: var(--ink);
+}
+.cart-link {
+  gap: 8px;
+  padding: 0 8px 0 14px;
+  text-decoration: none;
+  font-weight: 600;
+}
+.cart-link.active {
+  border-color: var(--ink);
+}
+.cart-badge {
+  display: inline-grid;
+  place-items: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--butter);
+  color: var(--on-butter);
+  font-size: 0.8125rem;
+  font-weight: 750;
+}
+
+.site-footer {
+  margin-top: 96px;
+  background: var(--surface-alt);
+  border-top: 1px solid var(--line);
+}
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: end;
+  gap: 24px;
+  width: min(100% - 2 * var(--gutter), var(--page));
+  margin-inline: auto;
+  padding: 48px 0;
+}
+.footer-inner p {
+  color: var(--muted);
+}
+.footer-meta {
+  display: grid;
+  gap: 4px;
+  justify-items: end;
+  font-size: var(--step--1);
+}
+.footer-meta a {
+  font-weight: 600;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.notice {
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 120px 0 72px;
+  text-align: center;
+}
+.notice h1 {
+  font-size: var(--step-5);
+}
+.notice p {
+  color: var(--muted);
+  font-size: var(--step-1);
+}
+.notice .order-id {
+  color: var(--ink);
+  white-space: nowrap;
+}
+.notice .button {
+  margin-top: 12px;
+}
+
+@media (max-width: 760px) {
+  .site-header {
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      "brand tools"
+      "nav nav";
+    column-gap: 12px;
+    padding-block: 10px 4px;
+  }
+  .brand {
+    grid-area: brand;
+  }
+  .brand-mark {
+    font-size: 1.625rem;
+  }
+  .header-tools {
+    grid-area: tools;
+    justify-self: end;
+    gap: 6px;
+  }
+  .main-nav {
+    grid-area: nav;
+    margin-inline: -14px;
+  }
+  .footer-meta {
+    justify-items: start;
+  }
+  .notice {
+    padding-top: 80px;
+  }
+}
+@media (max-width: 900px) {
+  .lang-full {
+    display: none;
+  }
+  .lang-short {
+    display: inline;
+  }
+}
+@media (max-width: 480px) {
+  .cart-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  .cart-link {
+    padding: 0 6px 0 10px;
+    gap: 6px;
+  }
+}
+/* Narrow phones (360px and below): the brand and four controls share one row. */
+@media (max-width: 400px) {
+  .header-tools {
+    gap: 4px;
+  }
+  .language-switch button {
+    min-width: 38px;
+    padding: 0 8px;
+  }
+}
+@media (max-width: 350px) {
+  .site-header {
+    padding-inline: 12px;
+  }
+  .brand-mark {
+    font-size: 1.375rem;
+  }
+  .header-tools {
+    gap: 2px;
+  }
+  .language-switch button {
+    min-width: 36px;
+    padding: 0 6px;
+  }
+  .theme-toggle {
+    min-width: 40px;
+  }
+}

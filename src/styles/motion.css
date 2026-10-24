@@ -1,0 +1,641 @@
+/*
+ * Motion layer. Everything here is decoration on top of a page that already works.
+ * html[data-motion] picks the choreography (see index.html and motionPreference.jsx):
+ *   full: movement, parallax, loops and travelling photos;
+ *   calm: the default when the system asks for less motion. Things still arrive and
+ *         catch the light, but only by fading, with nothing moving across the screen.
+ * The visitor can switch between them in the top bar or with the bedtime band's pause.
+ */
+
+/* Split headings: each word rises out of its own mask. */
+.split .line {
+  display: block;
+}
+.split .word {
+  display: inline-block;
+  overflow: clip;
+  vertical-align: top;
+  /* Room for accents and descenders inside the mask without moving the line. */
+  padding-block: 0.12em;
+  margin-block: -0.12em;
+}
+.split .word > span {
+  display: inline-block;
+}
+
+[data-motion="full"] {
+  .split .word > span {
+    transition: translate 0.9s var(--out);
+    transition-delay: calc(var(--i) * 70ms);
+  }
+  .split:not(.is-visible) .word > span {
+    translate: 0 120%;
+  }
+
+  /* Scroll reveals */
+  .reveal {
+    transition:
+      opacity 0.8s var(--out),
+      translate 0.8s var(--out);
+    transition-delay: var(--delay, 0ms);
+  }
+  .reveal:not(.is-visible) {
+    opacity: 0;
+    translate: 0 28px;
+  }
+  .pop-list li {
+    transition:
+      scale 0.5s var(--spring),
+      opacity 0.4s var(--out);
+    transition-delay: calc(150ms + var(--i) * 55ms);
+  }
+  .pop-list:not(.is-visible) li {
+    opacity: 0;
+    scale: 0.6;
+  }
+
+  /* Product photos open like a curtain going up, column by column. */
+  .product-tile .product-photo {
+    clip-path: inset(0 round var(--radius-panel));
+    transition:
+      clip-path 1.1s var(--out) calc(var(--stagger, 0) * 110ms),
+      transform 0.5s var(--out);
+  }
+  .product-tile:not(.is-visible) .product-photo {
+    clip-path: inset(100% 0 0 round var(--radius-panel));
+  }
+  .product-tile .product-info {
+    transition:
+      opacity 0.7s var(--out),
+      translate 0.7s var(--out);
+    transition-delay: calc(var(--stagger, 0) * 110ms + 250ms);
+  }
+  .product-tile:not(.is-visible) .product-info {
+    opacity: 0;
+    translate: 0 16px;
+  }
+
+  /* Page entrances: children arrive one after another. */
+  .enter > * {
+    animation: rise 0.7s var(--out) both;
+  }
+  .enter > :nth-child(2) {
+    animation-delay: 70ms;
+  }
+  .enter > :nth-child(3) {
+    animation-delay: 140ms;
+  }
+  .enter > :nth-child(4) {
+    animation-delay: 210ms;
+  }
+  .enter > :nth-child(5) {
+    animation-delay: 280ms;
+  }
+  .enter > :nth-child(6) {
+    animation-delay: 350ms;
+  }
+  .enter > :nth-child(n + 7) {
+    animation-delay: 420ms;
+  }
+
+  /* Hero: lights come on in the bedroom. */
+  .intro {
+    animation: rise 0.9s var(--out) var(--delay, 0ms) both;
+  }
+  .hero-photo {
+    animation: curtain 1.2s var(--out) 0.15s both;
+  }
+  .hero-photo img {
+    animation: settle 2.2s var(--out) both;
+  }
+  .sticker {
+    /* --px/--py follow the pointer or the phone's tilt; closer stickers drift further. */
+    translate: calc(-50% + var(--px, 0) * var(--depth, 0px))
+      calc(-50% + var(--py, 0) * var(--depth, 0px));
+    animation: sticker-pop 0.7s var(--spring) calc(0.5s + var(--i) * 60ms) both;
+  }
+  &[data-theme="night"] .sticker {
+    animation:
+      sticker-pop 0.7s var(--spring) calc(0.5s + var(--i) * 60ms) both,
+      twinkle 3.4s ease-in-out calc(var(--i) * -0.6s) infinite;
+  }
+  &[data-theme="night"] .shooting-star {
+    animation: shoot 9s ease-in 2.5s infinite;
+  }
+  &[data-theme="night"] .hero-photo::after {
+    animation: lamp 5s ease-in-out infinite;
+  }
+  .cart-badge {
+    animation: bump 0.35s var(--ease);
+  }
+
+  .add-button.is-added svg {
+    animation: check-pop 0.45s var(--spring);
+  }
+  .brand svg {
+    transition: rotate 0.6s var(--spring);
+  }
+  .brand:hover svg {
+    rotate: -16deg;
+  }
+}
+
+/* Calm: the same arrivals as fades, nothing travels. */
+[data-motion="calm"] {
+  .split .word > span {
+    transition: opacity 0.7s var(--out) calc(var(--i) * 60ms);
+  }
+  .split:not(.is-visible) .word > span {
+    opacity: 0;
+  }
+  .reveal {
+    transition: opacity 0.7s var(--out) var(--delay, 0ms);
+  }
+  .pop-list li {
+    transition: opacity 0.5s var(--out) calc(150ms + var(--i) * 55ms);
+  }
+  .product-tile :is(.product-photo, .product-info) {
+    transition: opacity 0.8s var(--out) calc(var(--stagger, 0) * 110ms);
+  }
+  .reveal:not(.is-visible),
+  .pop-list:not(.is-visible) li,
+  .product-tile:not(.is-visible) :is(.product-photo, .product-info) {
+    opacity: 0;
+  }
+  :is(.enter > *, .intro, .hero-photo) {
+    animation: fade 0.8s var(--out) var(--delay, 0ms) both;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes bump {
+  40% {
+    transform: scale(1.3);
+  }
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    translate: 0 24px;
+  }
+}
+@keyframes curtain {
+  from {
+    clip-path: inset(100% 0 0);
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+@keyframes settle {
+  from {
+    scale: 1.15;
+  }
+}
+@keyframes sticker-pop {
+  from {
+    opacity: 0;
+    scale: 0;
+  }
+  60% {
+    scale: 1.25;
+  }
+}
+@keyframes twinkle {
+  50% {
+    opacity: 0.45;
+  }
+}
+@keyframes shoot {
+  0% {
+    opacity: 0;
+    translate: 0 0;
+  }
+  2% {
+    opacity: 1;
+  }
+  9%,
+  100% {
+    opacity: 0;
+    translate: -360px 130px;
+  }
+}
+@keyframes lamp {
+  50% {
+    opacity: 0.65;
+  }
+}
+@keyframes check-pop {
+  from {
+    scale: 0.2;
+    rotate: -45deg;
+  }
+}
+
+/* A shooting star crosses the ceiling now and then, only at night. */
+.shooting-star {
+  position: absolute;
+  z-index: -1;
+  top: 12%;
+  left: 62%;
+  width: 150px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--sticker-edge), transparent);
+  rotate: -20deg;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Photos catch a light under the mouse: a sheen by day, a flashlight at night.
+   With full motion they also lean toward it. */
+@media (hover: hover) and (pointer: fine) {
+  .product-photo::after,
+  .detail-image::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      circle at var(--mx, 50%) var(--my, 30%),
+      rgb(255 255 255 / 0.7),
+      transparent 55%
+    );
+    mix-blend-mode: soft-light;
+    opacity: 0;
+    transition: opacity 0.4s var(--out);
+    pointer-events: none;
+  }
+  [data-theme="night"] .product-photo::after,
+  [data-theme="night"] .detail-image::after {
+    background: radial-gradient(
+      circle at var(--mx, 50%) var(--my, 30%),
+      rgb(247 215 116 / 0.6),
+      transparent 45%
+    );
+    mix-blend-mode: screen;
+  }
+  .product-tile:hover .product-photo::after,
+  .detail-image:hover::after {
+    opacity: 1;
+  }
+}
+@media (hover: hover) and (pointer: fine) {
+  [data-motion="full"] {
+    .product-photo,
+    .detail-image {
+      transform: perspective(900px) rotateX(calc(var(--py, 0) * -5deg))
+        rotateY(calc(var(--px, 0) * 7deg));
+    }
+    .detail-image {
+      transition: transform 0.5s var(--out);
+    }
+    .product-photo img {
+      transition: translate 0.5s var(--out);
+    }
+    .product-tile:hover .product-photo img {
+      translate: 0 -3%;
+    }
+
+    .button::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        115deg,
+        transparent 35%,
+        rgb(255 255 255 / 0.35) 50%,
+        transparent 65%
+      );
+      translate: -110% 0;
+      pointer-events: none;
+    }
+    .button:hover:not(:disabled)::after {
+      translate: 110% 0;
+      transition: translate 0.7s var(--out);
+    }
+  }
+}
+
+/* Phones: a tapped product sinks under the finger before it opens. */
+@media (hover: none) {
+  [data-motion="full"] .product-tile .product-photo {
+    transition:
+      clip-path 1.1s var(--out) calc(var(--stagger, 0) * 110ms),
+      scale 0.35s var(--spring);
+  }
+  [data-motion="full"] .product-tile:active .product-photo {
+    scale: 0.96;
+    transition-delay: 0s;
+  }
+}
+
+/* Bedtime band */
+.marquee {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 56px;
+  padding-right: 10px;
+  border-radius: 999px;
+  background: var(--butter);
+  color: var(--on-butter);
+  overflow: clip;
+  rotate: -1.2deg;
+}
+.marquee + .collection {
+  padding-top: 72px;
+}
+.marquee-window {
+  flex: 1;
+  min-width: 0;
+  overflow: clip;
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 4%,
+    #000 92%,
+    transparent
+  );
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+}
+.marquee ul {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin: 0;
+  padding: 16px 28px 16px 0;
+  list-style: none;
+}
+.marquee li {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  font-size: var(--step-2);
+  font-variation-settings: var(--casual);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+@media (max-width: 760px) {
+  .marquee li {
+    gap: 20px;
+    font-size: var(--step-1);
+  }
+  .marquee ul {
+    gap: 20px;
+    padding-block: 12px;
+  }
+}
+.marquee-pause {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--on-butter);
+  color: var(--butter);
+}
+.marquee-pause[aria-pressed="true"] {
+  outline: 2px solid var(--on-butter);
+  outline-offset: 2px;
+  background: transparent;
+  color: var(--on-butter);
+}
+.marquee-pause:focus-visible {
+  outline: 3px solid var(--on-butter);
+  outline-offset: 3px;
+}
+[data-motion="full"] {
+  .marquee-track {
+    animation: marquee 45s linear infinite;
+  }
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+}
+@keyframes marquee {
+  to {
+    translate: -50% 0;
+  }
+}
+
+/* Notices: a dozing moon at dead ends, a burst of stars for a finished order. */
+.notice-art {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 160px;
+  height: 120px;
+  color: var(--moon);
+}
+.notice-art.sleep span {
+  position: absolute;
+  left: 60%;
+  top: 22%;
+  color: var(--muted);
+  font-size: calc(1rem + var(--i) * 0.4rem);
+  font-variation-settings: var(--casual);
+  font-weight: 800;
+  translate: calc(var(--i) * 16px) calc(var(--i) * -18px);
+}
+.notice-art.burst svg:not(:last-child) {
+  position: absolute;
+  color: color-mix(in srgb, var(--butter) 80%, var(--ink));
+  transform: rotate(var(--angle)) translateY(-58px)
+    rotate(calc(-1 * var(--angle))) scale(1);
+}
+[data-motion="full"] {
+  .notice-art.sleep svg {
+    animation: doze 4s ease-in-out infinite;
+  }
+  .notice-art.sleep span {
+    opacity: 0;
+    animation: snore 3.6s ease-out calc(var(--i) * 1.2s) infinite;
+  }
+  .notice-art.burst svg:not(:last-child) {
+    animation: burst 0.9s var(--out) calc(0.2s + var(--i) * 25ms) both;
+  }
+  .notice-art.burst svg:last-child {
+    animation: sticker-pop 0.7s var(--spring) both;
+  }
+}
+@keyframes doze {
+  50% {
+    rotate: -10deg;
+  }
+}
+@keyframes snore {
+  0% {
+    opacity: 0;
+    translate: 0 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    translate: 40px -60px;
+    rotate: 14deg;
+  }
+}
+@keyframes burst {
+  from {
+    opacity: 0;
+    transform: rotate(var(--angle)) translateY(0)
+      rotate(calc(-1 * var(--angle))) scale(0);
+  }
+}
+
+/* Item flying into the cart; see flyToCart in motion.js. */
+.fly-clone {
+  position: fixed;
+  z-index: 60;
+  margin: 0;
+  max-height: none;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Scroll-driven extras where supported. The header lifts and tracks reading progress
+   in both modes, since they only follow the visitor's own scrolling. With full motion
+   the hero photo drifts and, on phones, product photos settle into place as they scroll in. */
+@supports (animation-timeline: view()) {
+  [data-motion="full"] .hero-photo img {
+    inset: -8% 0;
+    height: 116%;
+    animation:
+      settle 2.2s var(--out) both,
+      drift linear both;
+    animation-timeline: auto, view();
+  }
+  @media (hover: none) {
+    [data-motion="full"] .product-photo img {
+      animation: photo-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 45%;
+    }
+  }
+  [data-motion] {
+    .site-header {
+      animation: header-lift linear both;
+      animation-timeline: scroll();
+      animation-range: 0 160px;
+    }
+    .site-header::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -1px;
+      width: 100%;
+      height: 3px;
+      background: var(--butter);
+      transform-origin: 0 50%;
+      /* Hidden on pages too short to scroll, where the timeline stays inactive. */
+      scale: 0 1;
+      animation: read-progress linear both;
+      animation-timeline: scroll();
+    }
+  }
+}
+/* Grows into place rather than zooming out, so the small catalog photos are never upscaled. */
+@keyframes photo-in {
+  from {
+    scale: 0.88;
+    translate: 0 10%;
+  }
+}
+@keyframes drift {
+  from {
+    translate: 0 -6%;
+  }
+  to {
+    translate: 0 6%;
+  }
+}
+@keyframes header-lift {
+  to {
+    box-shadow: 0 14px 32px -22px rgb(8 12 32 / 0.6);
+  }
+}
+@keyframes read-progress {
+  from {
+    scale: 0 1;
+  }
+  to {
+    scale: 1 1;
+  }
+}
+
+/* View transitions, named by html[data-vt] (see runTransition). Calm mode keeps the
+   browser cross-fade; the choreography below needs full motion. */
+::view-transition-group(*) {
+  animation-duration: 0.55s;
+  animation-timing-function: var(--out);
+}
+/* Lights: the new theme spreads in a circle from the switch that was pressed. */
+html[data-motion="full"][data-vt="theme"]::view-transition-old(root),
+html[data-motion="full"][data-vt="theme"]::view-transition-new(root) {
+  mix-blend-mode: normal;
+}
+html[data-motion="full"][data-vt="theme"]::view-transition-old(root) {
+  animation: none;
+}
+html[data-motion="full"][data-vt="theme"]::view-transition-new(root) {
+  animation: lights 0.9s cubic-bezier(0.55, 0, 0.25, 1) both;
+}
+@keyframes lights {
+  from {
+    clip-path: circle(0 at var(--vt-x, 50%) var(--vt-y, 0));
+  }
+  to {
+    clip-path: circle(var(--vt-r, 150vmax) at var(--vt-x, 50%) var(--vt-y, 0));
+  }
+}
+/* Pages: the header stays put, the screen slides, and an opened product photo travels to its new place. */
+html[data-motion="full"][data-vt="page"] .site-header {
+  view-transition-name: site-header;
+}
+html[data-motion="full"][data-vt="page"]
+  :is(.product-photo, .detail-image, .cart-thumb) {
+  view-transition-name: var(--vt-name, none);
+  view-transition-class: shared;
+}
+/* Sliding content passes under the header; the travelling photo flies above both. */
+::view-transition-group(site-header) {
+  z-index: 1;
+}
+::view-transition-group(*.shared) {
+  z-index: 2;
+}
+html[data-motion="full"][data-vt="page"]::view-transition-old(root) {
+  animation: page-out 0.25s ease-in both;
+}
+html[data-motion="full"][data-vt="page"]::view-transition-new(root) {
+  animation: page-in 0.55s var(--out) 0.1s both;
+}
+@keyframes page-out {
+  to {
+    opacity: 0;
+    translate: 0 -16px;
+  }
+}
+@keyframes page-in {
+  from {
+    opacity: 0;
+    translate: 0 28px;
+  }
+}
+/* Filters, sorting and removals: items glide to their new positions. */
+html[data-motion="full"][data-vt="filter"] :is(.product-tile, .cart-list li) {
+  view-transition-name: var(--tile-name);
+}
