@@ -75,7 +75,8 @@ test("modo noche accesible y sin desborde horizontal", async ({ page }) => {
   await page.getByRole("button", { name: "Agregar Grogu al carrito" }).click();
   for (const path of ["/", "/item/3122", "/cart", "/nosotros"]) {
     await page.goto(path);
-    await page.getByRole("main").waitFor();
+    // <main> already exists while the catalog loads; the page heading means it settled.
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     const overflow = await page.evaluate(
       () => document.documentElement.scrollWidth - window.innerWidth,
     );

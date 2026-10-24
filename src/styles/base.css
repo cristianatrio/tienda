@@ -178,7 +178,9 @@ input[aria-invalid="true"] {
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    /* 0s, not 0.01ms: transition-property defaults to "all", so any duration would make
+       every inherited color change animate, and a stalled frame left text stuck mid-way. */
+    transition-duration: 0s !important;
     transition-delay: 0s !important;
   }
 }
