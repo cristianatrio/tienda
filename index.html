@@ -1,2 +1,48 @@
 <!doctype html>
-<html lang="es"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="theme-color" content="#164c43"/><meta name="description" content="AirKids: una tienda de pijamas hecha con React. Explorá la colección y probá una experiencia de compra de demostración."/><title>AirKids · Pijamas para soñar</title></head><body><div id="root"></div><script type="module" src="/src/main.jsx"></script></body></html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1b2550" />
+    <meta
+      name="description"
+      content="AirKids: una tienda de pijamas hecha con React, en español e inglés. Explorá la colección y probá una compra de demostración."
+    />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <title>AirKids: pijamas para soñar</title>
+    <script>
+      // Mirrors src/preferences.js so language and theme are right before the first paint.
+      (function () {
+        var root = document.documentElement,
+          lang,
+          theme;
+        try {
+          lang = localStorage.getItem("airkids-lang");
+          theme = localStorage.getItem("airkids-theme");
+        } catch (e) {}
+        var browser =
+          (navigator.languages && navigator.languages[0]) ||
+          navigator.language ||
+          "es";
+        root.lang =
+          lang === "es" || lang === "en"
+            ? lang
+            : browser.toLowerCase().indexOf("es") === 0
+              ? "es"
+              : "en";
+        root.dataset.theme =
+          theme === "day" || theme === "night"
+            ? theme
+            : window.matchMedia &&
+                matchMedia("(prefers-color-scheme: dark)").matches
+              ? "night"
+              : "day";
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

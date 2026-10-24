@@ -1,7 +1,8 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { beforeEach, expect, it, vi } from "vitest";
-import App, { Checkout } from "./App.jsx";
+import App from "./App.jsx";
+import { Checkout } from "./pages/Checkout.jsx";
 import { demoProducts } from "./data.js";
 import { loadCatalog, placeOrder } from "./services.js";
 vi.mock("./services.js", () => ({
@@ -126,4 +127,68 @@ it("bloquea solicitudes simultáneas", () => {
   fireEvent.submit(form);
   fireEvent.submit(form);
   expect(placeOrder).toHaveBeenCalledTimes(1);
+});
+function renderApp(path = "/") {
+  return render(
+    <MemoryRouter initialEntries={[path]}>
+      <App />
+    </MemoryRouter>,
+  );
+}
+it("cambia a inglés, actualiza el documento y recuerda la elección", async () => {
+  const first = renderApp();
+  await screen.findByRole("heading", { name: "Elegí su próxima aventura" });
+  fireEvent.click(screen.getByRole("button", { name: /English/ }));
+  expect(
+    screen.getByRole("heading", { name: "Pick their next adventure" }),
+  ).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: /English/ })).toHaveAttribute(
+    "aria-pressed",
+    "true",
+  );
+  expect(document.documentElement.lang).toBe("en");
+  expect(localStorage.getItem("airkids-lang")).toBe("en");
+  first.unmount();
+  renderApp("/item/3120");
+  expect(
+    await screen.findByRole("button", { name: "Add to cart" }),
+  ).toBeInTheDocument();
+  expect(
+    screen.getByText(/Two-piece set with a Grogu print/),
+  ).toBeInTheDocument();
+});
+it("apaga la luz y guarda el modo noche", async () => {
+  renderApp();
+  await screen.findByRole("heading", { name: "Grogu" });
+  const toggle = screen.getByRole("button", { name: "Modo noche" });
+  expect(toggle).toHaveAttribute("aria-pressed", "false");
+  fireEvent.click(toggle);
+  expect(toggle).toHaveAttribute("aria-pressed", "true");
+  expect(document.documentElement.dataset.theme).toBe("night");
+  expect(localStorage.getItem("airkids-theme")).toBe("night");
+});
+it("agrega desde el catálogo y actualiza el contador", async () => {
+  renderApp();
+  fireEvent.click(
+    await screen.findByRole("button", { name: "Agregar Grogu al carrito" }),
+  );
+  expect(
+    screen.getByRole("link", { name: /Carrito\s+1\s+producto$/ }),
+  ).toBeInTheDocument();
+  expect(screen.getByRole("status")).toHaveTextContent(
+    "Grogu se agregó al carrito",
+  );
+});
+it("ajusta cantidades dentro del carrito", async () => {
+  localStorage.setItem(
+    "airkids-cart-v1",
+    JSON.stringify([{ id: "3120", quantity: 1 }]),
+  );
+  renderApp("/cart");
+  fireEvent.click(
+    await screen.findByRole("button", { name: "Sumar una unidad de Grogu" }),
+  );
+  expect(
+    screen.getByRole("link", { name: /Carrito\s+2\s+productos/ }),
+  ).toBeInTheDocument();
 });

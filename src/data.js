@@ -1,8 +1,5 @@
-export const categories = [
-  { id: "Cortos", name: "Pijamas cortos" },
-  { id: "MediaEstacion", name: "Media estación" },
-  { id: "Largos", name: "Pijamas largos" },
-];
+// Display names live in src/locales; Firestore stores these ids in "tipo".
+export const categoryIds = ["Cortos", "MediaEstacion", "Largos"];
 export const demoProducts = [
   {
     id: "3120",
@@ -11,6 +8,8 @@ export const demoProducts = [
     nombre: "Grogu",
     descripcion:
       "Un pequeño compañero para grandes sueños. Conjunto de pijama corto con estampa de Grogu.",
+    descripcionEn:
+      "A small companion for big dreams. Two-piece set with a Grogu print.",
     cantidad: 20,
     precio: 67.52,
     imagen: "grogu.jpeg",
@@ -22,6 +21,8 @@ export const demoProducts = [
     nombre: "Lilo",
     descripcion:
       "Noches de películas y mañanas sin apuro. Pijama largo con una estampa llena de personalidad.",
+    descripcionEn:
+      "Movie nights and slow mornings. Long pajamas with a print full of personality.",
     cantidad: 20,
     precio: 67.52,
     imagen: "lilo.jpeg",
@@ -33,15 +34,21 @@ export const demoProducts = [
     nombre: "Stranger Things",
     descripcion:
       "Para quienes sueñan con otras dimensiones. Un conjunto para acompañar las noches de media estación.",
+    descripcionEn:
+      "For kids who dream of other dimensions. A set for in-between-season nights.",
     cantidad: 20,
     precio: 72.21,
     imagen: "strangerthings.jpeg",
   },
 ];
-export const money = (n) =>
-  new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS" }).format(
-    n,
-  );
+/**
+ * English copy is optional per product; Spanish remains the source of truth.
+ * @param {{ descripcion?: string, descripcionEn?: string }} product
+ * @param {"es" | "en"} lang
+ * @returns {string}
+ */
+export const localizedDescription = (product, lang) =>
+  (lang === "en" && product.descripcionEn) || product.descripcion || "";
 export function normalizeProduct(id, data) {
   const price = Number(data.precio),
     stock = Number(data.cantidad);
@@ -60,6 +67,9 @@ export function normalizeProduct(id, data) {
     precio: price,
     cantidad: stock,
     imagen: /^[\w.-]+$/.test(data.imagen || "") ? data.imagen : "",
+    descripcion: typeof data.descripcion === "string" ? data.descripcion : "",
+    descripcionEn:
+      typeof data.descripcionEn === "string" ? data.descripcionEn : "",
   };
 }
 export function restoreCart(value) {

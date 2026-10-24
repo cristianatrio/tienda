@@ -1,0 +1,75 @@
+/* AirKids tokens. Day = the bedroom with the light on; night = lights off, stickers glowing. */
+:root {
+  color-scheme: light;
+  --bg: #f7f8fc;
+  --surface: #ffffff;
+  --surface-alt: #eef1f8;
+  --wall: #dfe7f6;
+  --ink: #1b2550;
+  --muted: #535c7d;
+  --line: #d9deeb;
+  --field-line: #9aa3bf;
+  --accent: #1b2550;
+  --accent-hover: #2c3a73;
+  --on-accent: #ffffff;
+  --butter: #f7d774;
+  --on-butter: #1b2550;
+  --moon: #1b2550;
+  --bar-bg: #1b2550;
+  --bar-ink: #f4f6fd;
+  --sticker: #eaf0c4;
+  --sticker-edge: #b8c178;
+  --glow: transparent;
+  --focus: #1b2550;
+  --error: #a3261a;
+  --tone-Cortos: #f8efd3;
+  --tone-MediaEstacion: #ebe7f5;
+  --tone-Largos: #e1e9f6;
+  --tone-none: #eef0f6;
+
+  --font: "Recursive Variable", ui-rounded, system-ui, sans-serif;
+  --casual: "CASL" 1;
+  --linear: "CASL" 0;
+  --step--1: 0.875rem;
+  --step-0: 1rem;
+  --step-1: 1.125rem;
+  --step-2: 1.3125rem;
+  --step-3: 1.5rem;
+  --step-4: 2.25rem;
+  --step-5: clamp(2.25rem, 2.6vw + 1.25rem, 3rem);
+  --display: clamp(2.75rem, 4.6vw + 1rem, 5.25rem);
+
+  --page: 1320px;
+  --gutter: clamp(16px, 4vw, 48px);
+  --radius-wall: 36px;
+  --radius-panel: 28px;
+  --radius-field: 12px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+[data-theme="night"] {
+  color-scheme: dark;
+  --bg: #121a3a;
+  --surface: #1a2450;
+  --surface-alt: #172048;
+  --wall: #18214a;
+  --ink: #eef1fb;
+  --muted: #b3bad6;
+  --line: #2f3a6b;
+  --field-line: #6f7aa6;
+  --accent: #f7d774;
+  --accent-hover: #ffe59a;
+  --on-accent: #121a3a;
+  --moon: #f7d774;
+  --bar-bg: #0e1533;
+  --bar-ink: #e4e8f7;
+  --sticker: #e4f3a0;
+  --sticker-edge: #f4fbd2;
+  --glow: rgb(228 243 160 / 0.7);
+  --focus: #f7d774;
+  --error: #ffb4a8;
+  --tone-Cortos: #e2d9bd;
+  --tone-MediaEstacion: #d5d1e5;
+  --tone-Largos: #ccd5e8;
+  --tone-none: #d2d6e3;
+}
