@@ -31,6 +31,8 @@ export function GlowStars() {
               top: `${y}%`,
               "--turn": `${turn}deg`,
               "--i": i,
+              // Bigger stickers sit closer, so they drift further with the pointer.
+              "--depth": `${size * 0.6}px`,
             }}
           />
         );

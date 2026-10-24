@@ -12,6 +12,8 @@ Tienda de pijamas creada por **Cristian Atrio**, a partir de su proyecto final d
 | --------------------------------------------- | ----------------------------------------------------------- |
 | ![AirKids con la luz apagada](docs/night.png) | ![AirKids en celular y en inglés](docs/mobile-night-en.png) |
 
+![Recorrido animado: el titular aparece palabra por palabra, la luz se apaga en un círculo, las fotos se descubren al bajar, una ficha se inclina hacia el cursor, un pijama vuela al carrito y la foto viaja hasta el detalle](docs/motion.gif)
+
 ## Probar en tu equipo
 
 Requiere Node.js 22.12 o superior; recomendado: última versión de Node 22.
@@ -32,7 +34,9 @@ Abrí la dirección indicada en la terminal. Cambiá el idioma con **Español / 
 ## Funcionalidades
 
 - **Español e inglés**: detecta el idioma del navegador, recuerda la elección y actualiza textos, `lang` del documento, títulos de página y formato de precios.
-- **Modo noche**: sigue la preferencia del sistema o el botón de la luz; las estrellas del techo se iluminan con un fundido mediante View Transitions.
+- **Modo noche**: sigue la preferencia del sistema o el botón de la luz. La noche se extiende en un círculo desde el interruptor, las estrellas del techo titilan y cada tanto cruza una estrella fugaz.
+- **Movimiento**: titulares que suben palabra por palabra, textos y fotos que aparecen al bajar, fichas que se inclinan hacia el cursor con un reflejo (de noche, una linterna), la foto que viaja de la ficha al detalle, el pijama que vuela al carrito y fichas que se reacomodan al filtrar u ordenar.
+- Todo el movimiento respeta la preferencia de movimiento reducido. La cinta de excusas para no dormir tiene un botón de pausa que detiene todas las animaciones continuas y se recuerda (WCAG 2.2.2).
 - Búsqueda, categorías y orden por precio.
 - Agregado rápido desde el catálogo, con aviso para lectores de pantalla.
 - Detalle y cantidades limitadas por stock, también editables dentro del carrito.
@@ -56,7 +60,9 @@ Abrí la dirección indicada en la terminal. Cambiá el idioma con **Español / 
 | [Vitest](https://vitest.dev/) y [Testing Library](https://testing-library.com/)      | Pruebas de comportamiento.                                         |
 | [Playwright](https://playwright.dev/) y [axe](https://github.com/dequelabs/axe-core) | Recorridos completos y accesibilidad automática.                   |
 
-Las traducciones son diccionarios propios en lugar de una librería de i18n: con dos idiomas y 131 textos por idioma, un contexto de React evita dependencias y una prueba garantiza que ambos idiomas tengan las mismas claves. Un script mínimo en `index.html` aplica idioma y tema antes del primer pintado para evitar destellos. La demo no depende de servicios externos.
+Las traducciones son diccionarios propios en lugar de una librería de i18n: con dos idiomas y 139 textos por idioma, un contexto de React evita dependencias y una prueba garantiza que ambos idiomas tengan las mismas claves. Un script mínimo en `index.html` aplica idioma y tema antes del primer pintado para evitar destellos. La demo no depende de servicios externos.
+
+Las animaciones usan solo APIs del navegador: CSS, IntersectionObserver, View Transitions, animaciones ligadas al scroll y Web Animations. Suman unos 5 KB comprimidos entre JS y CSS, sin librerías. Donde el navegador no admite una API, la página funciona igual sin ese efecto. `BrowserRouter` usa `useTransitions={false}` para que el cambio de ruta se pinte dentro de la transición de vista.
 
 ## Estructura
 
@@ -65,10 +71,11 @@ Las traducciones son diccionarios propios en lugar de una librería de i18n: con
 - src/components/: encabezado, portada, ficha de producto y piezas compartidas.
 - src/i18n.jsx y src/locales/: idioma activo y textos en español e inglés.
 - src/theme.jsx y src/preferences.js: modo noche y preferencias guardadas.
+- src/motion.js, src/useReveal.js, src/usePointerVars.js y src/useTransitionClick.js: transiciones de vista, apariciones al hacer scroll, posición del cursor y vuelo al carrito.
 - src/cart.js y src/useCart.js: reglas inmutables y persistencia del carrito.
 - src/data.js: catálogo demo y validaciones.
 - src/services.js: adaptador demo/Firebase con carga bajo demanda.
-- src/styles/: tokens de color y tipografía, base, encabezado y páginas.
+- src/styles/: tokens de color y tipografía, base, encabezado, páginas y movimiento.
 - functions/: pedidos validados en servidor.
 - e2e/: pruebas en escritorio y celular.
 - firestore.rules: política de acceso.

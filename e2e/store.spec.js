@@ -97,3 +97,53 @@ test.describe("visitante con navegador en inglés", () => {
     ).toBeVisible();
   });
 });
+
+test.describe("visitante que acepta animaciones", () => {
+  test.use({ reducedMotion: "no-preference" });
+  test("revela textos al leer, vuela al carrito y permite pausar", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    await expect(
+      page.getByRole("heading", { name: "El día termina. La aventura sigue." }),
+    ).toHaveClass(/is-visible/);
+    const story = page.getByRole("heading", {
+      name: "Menos pantallas. Más historias.",
+    });
+    await expect(story).not.toHaveClass(/is-visible/);
+    await story.scrollIntoViewIfNeeded();
+    await expect(story).toHaveClass(/is-visible/);
+
+    await page
+      .getByRole("button", { name: "Agregar Grogu al carrito" })
+      .click();
+    await expect(page.locator(".fly-clone")).toHaveCount(1);
+    await expect(page.locator(".fly-clone")).toHaveCount(0);
+    await expect(
+      page.getByRole("link", { name: /^Carrito\s+1\s+producto$/ }),
+    ).toBeVisible();
+
+    const pause = page.getByRole("button", { name: "Pausar animaciones" });
+    await pause.click();
+    await expect(pause).toHaveAttribute("aria-pressed", "true");
+    await page.reload();
+    await expect(page.locator("html")).toHaveAttribute("data-motion", "paused");
+    // Once the entrance has played, the animated page must pass axe too.
+    await page.waitForFunction(() =>
+      document
+        .getAnimations()
+        .every(
+          (a) =>
+            a.playState !== "running" ||
+            !(a.timeline instanceof DocumentTimeline),
+        ),
+    );
+    await noViolations(page);
+
+    await page.getByRole("heading", { name: "Lilo" }).getByRole("link").click();
+    await expect(page).toHaveURL(/\/item\/3121$/);
+    await expect(
+      page.getByRole("heading", { name: "Lilo", level: 1 }),
+    ).toBeVisible();
+  });
+});

@@ -8,6 +8,8 @@ A kids’ pajama store built by **Cristian Atrio**, grown from his final React p
 
 ![AirKids on desktop](docs/desktop.png)
 
+![Animated tour: the headline rises word by word, the lights go out in a circle, photos uncover as you scroll, a tile leans toward the cursor, pajamas fly into the cart and the photo travels to the detail page](docs/motion.gif)
+
 ## Run it locally
 
 Requires Node.js 22.12 or later; the latest Node 22 is recommended.
@@ -26,7 +28,9 @@ Open the address printed in the terminal. Switch language with **Español / Engl
 ## What it does
 
 - **Spanish and English**: detects the browser language, remembers the choice and updates copy, the document `lang`, page titles and price formatting.
-- **Night mode**: follows the system setting or the light switch; the ceiling stickers start glowing through a View Transitions crossfade.
+- **Night mode**: follows the system setting or the light switch. Night spreads in a circle from the switch, the ceiling stickers twinkle and a shooting star crosses now and then.
+- **Motion**: headlines that rise word by word, text and photos that appear as you scroll, tiles that lean toward the cursor with a sheen (a flashlight at night), the photo travelling from the tile to the detail page, pajamas flying into the cart and tiles that glide when you filter or sort.
+- All motion respects reduced-motion settings. The band of bedtime excuses has a pause button that stops every looping animation and is remembered (WCAG 2.2.2).
 - Search, categories and price sorting.
 - Quick add from the catalog, announced to screen readers.
 - Product detail and stock-limited quantities, editable inside the cart too.
@@ -38,14 +42,14 @@ Open the address printed in the terminal. Switch language with **Español / Engl
 
 ## How it’s verified
 
-- 26 Vitest and Testing Library tests: catalog, checkout, cart rules, stored preferences and translation parity.
+- 34 Vitest and Testing Library tests: catalog, checkout, cart rules, stored preferences, translation parity and the motion helpers.
 - 5 server logic tests for the order function.
-- 10 Playwright runs on desktop and mobile, with axe checks in Spanish, English and night mode, plus a horizontal overflow check.
+- 12 Playwright runs on desktop and mobile, with axe checks in Spanish, English, night mode and with animations on, plus a horizontal overflow check.
 - `npm audit` for client and server dependencies, and CI on every push.
 
 ## Stack
 
-React 18, React Router, Vite, Firebase (optional), Recursive variable font via Fontsource, Lucide icons, Vitest, Testing Library, Playwright and axe-core. Translations are plain dictionaries behind a React context; a test keeps both languages in sync.
+React 18, React Router, Vite, Firebase (optional), Recursive variable font via Fontsource, Lucide icons, Vitest, Testing Library, Playwright and axe-core. Translations are plain dictionaries behind a React context; a test keeps both languages in sync. Animations use only browser APIs (CSS, IntersectionObserver, View Transitions, scroll-driven animations and Web Animations), about 5 KB gzipped with no animation library.
 
 See [SECURITY.md](SECURITY.md) (Spanish) for the security model and its limits, and [docs/design.md](docs/design.md) for the visual direction.
 

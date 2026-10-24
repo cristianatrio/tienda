@@ -66,6 +66,16 @@ export default {
     text: "One more chapter, a long hug and the pajamas they never want to take off.",
     link: "About the project",
   },
+  marquee: {
+    pause: "Pause animations",
+    items: [
+      "One more story",
+      "Five more minutes",
+      "I’m thirsty",
+      "Leave the door open",
+      "I’m not even tired",
+    ],
+  },
   product: {
     alt: (name) => `${name} pajamas`,
     noImage: "Image not available",
@@ -161,6 +171,10 @@ export default {
       {
         term: "Night mode",
         text: "Follows the system setting or the light switch. Contrast is checked separately for each theme.",
+      },
+      {
+        term: "Motion with a purpose",
+        text: "Text that appears as you read, page transitions and photos that fly into the cart. Everything stops with reduced motion or the pause button.",
       },
       {
         term: "Tested on every change",

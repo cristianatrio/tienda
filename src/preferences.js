@@ -3,6 +3,7 @@ export const LANGUAGES = ["es", "en"];
 export const THEMES = ["day", "night"];
 export const LANGUAGE_KEY = "airkids-lang";
 export const THEME_KEY = "airkids-theme";
+export const MOTION_KEY = "airkids-motion";
 
 /**
  * Stored choice first; otherwise Spanish for Spanish-speaking browsers and English for everyone else.

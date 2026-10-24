@@ -1,7 +1,13 @@
 import { defineConfig } from "@playwright/test";
 export default defineConfig({
   testDir: "./e2e",
-  use: { baseURL: "http://127.0.0.1:4173", headless: true, locale: "es-AR" },
+  use: {
+    baseURL: "http://127.0.0.1:4173",
+    headless: true,
+    locale: "es-AR",
+    // Settled pages keep axe deterministic; the motion test opts back in.
+    reducedMotion: "reduce",
+  },
   webServer: {
     command: "npm run dev -- --port 4173",
     url: "http://127.0.0.1:4173",

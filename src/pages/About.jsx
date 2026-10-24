@@ -1,9 +1,12 @@
 import { ArrowUpRight } from "lucide-react";
+import { Reveal } from "../components/Reveal.jsx";
+import { SplitText } from "../components/SplitText.jsx";
 import { useI18n } from "../i18n.jsx";
 import { usePageTitle } from "../usePageTitle.js";
 
 const REPOSITORY = "https://github.com/cristianatrio/tienda";
 const PROFILE = "https://github.com/cristianatrio";
+const COLUMN_DELAY_MS = 140;
 const STACK = [
   "React 18",
   "React Router",
@@ -21,32 +24,40 @@ export function About() {
   return (
     <article className="about">
       <header className="about-intro">
-        <h1>
-          <span>{t.about.titleStart}</span> <span>{t.about.titleEnd}</span>
-        </h1>
-        <p className="about-lead">{t.about.intro}</p>
-        <p>{t.about.demo}</p>
+        <SplitText as="h1" lines={[t.about.titleStart, t.about.titleEnd]} />
+        <Reveal as="p" className="about-lead" delay={350}>
+          {t.about.intro}
+        </Reveal>
+        <Reveal as="p" delay={450}>
+          {t.about.demo}
+        </Reveal>
       </header>
       <section aria-labelledby="built-title">
-        <h2 id="built-title">{t.about.builtTitle}</h2>
+        <Reveal as="h2" id="built-title">
+          {t.about.builtTitle}
+        </Reveal>
         <dl className="built-list">
-          {t.about.built.map((item) => (
-            <div key={item.term}>
+          {t.about.built.map((item, i) => (
+            <Reveal key={item.term} delay={(i % 2) * COLUMN_DELAY_MS}>
               <dt>{item.term}</dt>
               <dd>{item.text}</dd>
-            </div>
+            </Reveal>
           ))}
         </dl>
       </section>
       <section aria-labelledby="stack-title" className="stack">
-        <h2 id="stack-title">{t.about.stackTitle}</h2>
-        <ul>
-          {STACK.map((tool) => (
-            <li key={tool}>{tool}</li>
+        <Reveal as="h2" id="stack-title">
+          {t.about.stackTitle}
+        </Reveal>
+        <Reveal as="ul" className="pop-list">
+          {STACK.map((tool, i) => (
+            <li key={tool} style={{ "--i": i }}>
+              {tool}
+            </li>
           ))}
-        </ul>
+        </Reveal>
       </section>
-      <div className="about-links">
+      <Reveal className="about-links">
         <a className="button" href={REPOSITORY}>
           {t.about.code}
           <ArrowUpRight aria-hidden="true" size={18} />
@@ -54,7 +65,7 @@ export function About() {
         <a className="text-link" href={PROFILE}>
           {t.about.profile}
         </a>
-      </div>
+      </Reveal>
     </article>
   );
 }

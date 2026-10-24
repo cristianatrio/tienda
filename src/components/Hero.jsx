@@ -1,21 +1,29 @@
 import { Moon, Sun } from "lucide-react";
 import { useI18n } from "../i18n.jsx";
 import { useTheme } from "../theme.jsx";
+import { usePointerVars } from "../usePointerVars.js";
 import { GlowStars } from "./GlowStars.jsx";
+import { SplitText } from "./SplitText.jsx";
 
 export function Hero() {
   const { t } = useI18n();
   const { theme, toggleTheme } = useTheme();
+  const pointer = usePointerVars();
   const night = theme === "night";
   return (
-    <section className="hero" aria-labelledby="hero-title">
+    <section className="hero" aria-labelledby="hero-title" {...pointer}>
       <GlowStars />
+      <span className="shooting-star" aria-hidden="true" />
       <div className="hero-copy">
-        <h1 id="hero-title">
-          <span>{t.hero.titleStart}</span> <span>{t.hero.titleEnd}</span>
-        </h1>
-        <p className="hero-lead">{t.hero.lead}</p>
-        <div className="hero-actions">
+        <SplitText
+          as="h1"
+          id="hero-title"
+          lines={[t.hero.titleStart, t.hero.titleEnd]}
+        />
+        <p className="hero-lead intro" style={{ "--delay": "450ms" }}>
+          {t.hero.lead}
+        </p>
+        <div className="hero-actions intro" style={{ "--delay": "600ms" }}>
           <a className="button" href="#coleccion">
             {t.hero.shop}
           </a>
@@ -32,7 +40,9 @@ export function Hero() {
             {night ? t.hero.lightsOn : t.hero.lightsOff}
           </button>
         </div>
-        <p className="hero-note">{t.hero.note}</p>
+        <p className="hero-note intro" style={{ "--delay": "750ms" }}>
+          {t.hero.note}
+        </p>
       </div>
       <figure className="hero-photo">
         <img

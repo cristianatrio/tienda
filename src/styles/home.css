@@ -10,7 +10,8 @@
   padding: 88px 56px 56px;
   border-radius: var(--radius-wall);
   background: var(--wall);
-  overflow: hidden;
+  /* clip, not hidden: a scroll container here would stop the photo's scroll-driven drift. */
+  overflow: clip;
 }
 .glow-stars {
   position: absolute;
@@ -22,12 +23,17 @@
   position: absolute;
   color: var(--sticker);
   stroke: var(--sticker-edge);
-  transform: translate(-50%, -50%) rotate(var(--turn));
+  /* --px/--py follow the pointer over the hero; closer stickers drift further. */
+  translate: calc(-50% + var(--px, 0) * var(--depth, 0px))
+    calc(-50% + var(--py, 0) * var(--depth, 0px));
+  rotate: var(--turn);
   transition:
     color 0.6s var(--ease),
     stroke 0.6s var(--ease),
-    filter 0.9s var(--ease);
-  transition-delay: calc(var(--i) * 70ms);
+    filter 0.9s var(--ease),
+    translate 0.9s var(--out);
+  transition-delay:
+    calc(var(--i) * 70ms), calc(var(--i) * 70ms), calc(var(--i) * 70ms), 0s;
 }
 [data-theme="night"] .sticker {
   filter: drop-shadow(0 0 4px var(--glow)) drop-shadow(0 0 14px var(--glow));
@@ -42,7 +48,7 @@
   letter-spacing: -0.04em;
   margin-bottom: 28px;
 }
-.hero h1 span {
+.hero h1 .line {
   display: block;
 }
 .hero-lead {
@@ -67,7 +73,7 @@
   height: 100%;
   margin: 0;
   border-radius: 999px 999px var(--radius-panel) var(--radius-panel);
-  overflow: hidden;
+  overflow: clip;
   background: var(--butter);
 }
 .hero-photo img {

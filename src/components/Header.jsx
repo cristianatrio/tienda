@@ -1,9 +1,10 @@
 import { Moon, ShoppingBag, Sun } from "lucide-react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useI18n } from "../i18n.jsx";
 import { isDemo } from "../services.js";
 import { useTheme } from "../theme.jsx";
 import { BrandMark } from "./BrandMark.jsx";
+import { TransitionLink } from "./TransitionLink.jsx";
 
 const LANGUAGE_OPTIONS = [
   { code: "es", short: "ES", name: "Español" },
@@ -63,30 +64,32 @@ export function Header({ cartCount }) {
       <div className="demo-bar" role="region" aria-label={t.demoBar.label}>
         <p>
           {isDemo ? t.demoBar.demo : t.demoBar.live}{" "}
-          <Link to="/nosotros">{t.demoBar.more}</Link>
+          <TransitionLink to="/nosotros">{t.demoBar.more}</TransitionLink>
         </p>
       </div>
       <header className="site-header">
-        <Link className="brand" to="/" aria-label={t.nav.home}>
+        <TransitionLink className="brand" to="/" aria-label={t.nav.home}>
           <BrandMark />
-        </Link>
+        </TransitionLink>
         <nav className="main-nav" aria-label={t.nav.label}>
-          <NavLink to="/" end>
+          <TransitionLink as={NavLink} to="/" end>
             {t.nav.collection}
-          </NavLink>
-          <NavLink to="/nosotros">{t.nav.project}</NavLink>
+          </TransitionLink>
+          <TransitionLink as={NavLink} to="/nosotros">
+            {t.nav.project}
+          </TransitionLink>
         </nav>
         <div className="header-tools">
           <LanguageSwitch />
           <ThemeToggle />
-          <NavLink className="cart-link" to="/cart">
+          <TransitionLink as={NavLink} className="cart-link" to="/cart">
             <ShoppingBag aria-hidden="true" size={20} />
             <span className="cart-label">{t.nav.cart}</span>{" "}
             <span className="cart-badge" key={cartCount}>
               {cartCount}
             </span>
             <span className="sr-only"> {t.nav.cartUnits(cartCount)}</span>
-          </NavLink>
+          </TransitionLink>
         </div>
       </header>
     </>

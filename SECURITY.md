@@ -10,7 +10,7 @@
 - Precios y stock obtenidos por el servidor; el cliente no determina importes.
 - Transacción para pedido y descuento de stock, con ID de solicitud idempotente.
 - Reglas que permiten leer catálogo pero deniegan acceso directo a pedidos y escritura de productos.
-- Persistencia local limitada a IDs y cantidades del carrito, con validación al restaurar, más idioma y tema elegidos. Valores guardados desconocidos se descartan.
+- Persistencia local limitada a IDs y cantidades del carrito, con validación al restaurar, más idioma, tema y pausa de animaciones elegidos. Valores guardados desconocidos se descartan.
 - Textos del catálogo y traducciones se muestran como texto de React, sin HTML interpretado. descripcionEn se acepta solo si es una cadena.
 - Sin registros de datos personales; archivos de entorno excluidos de Git.
 

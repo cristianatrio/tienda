@@ -8,9 +8,11 @@ import "./styles/base.css";
 import "./styles/layout.css";
 import "./styles/home.css";
 import "./styles/pages.css";
+import "./styles/motion.css";
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter>
+    {/* Synchronous route updates let View Transitions capture the new page (see useTransitionClick). */}
+    <BrowserRouter useTransitions={false}>
       <App />
     </BrowserRouter>
   </React.StrictMode>,

@@ -67,6 +67,16 @@ export default {
     text: "Un cuento más, un abrazo largo y ese pijama que no se quiere sacar.",
     link: "Conocé el proyecto",
   },
+  marquee: {
+    pause: "Pausar animaciones",
+    items: [
+      "Un cuento más",
+      "Cinco minutitos más",
+      "Tengo sed",
+      "Dejá la puerta abierta",
+      "No tengo sueño",
+    ],
+  },
   product: {
     alt: (name) => `Pijama ${name}`,
     noImage: "Imagen no disponible",
@@ -166,6 +176,10 @@ export default {
       {
         term: "Modo noche",
         text: "Sigue la preferencia del sistema o el botón de la luz. Los colores se revisan por separado en cada tema.",
+      },
+      {
+        term: "Movimiento con propósito",
+        text: "Textos que aparecen al leer, transiciones entre páginas y fotos que vuelan al carrito. Todo se detiene con movimiento reducido o con el botón de pausa.",
       },
       {
         term: "Probado en cada cambio",

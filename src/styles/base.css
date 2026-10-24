@@ -85,6 +85,8 @@ main:focus {
 }
 
 .button {
+  position: relative;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -101,14 +103,14 @@ main:focus {
     background-color 0.15s,
     border-color 0.15s,
     color 0.15s,
-    transform 0.15s;
+    scale 0.25s var(--spring);
 }
 .button:hover:not(:disabled) {
   background: var(--accent-hover);
   border-color: var(--accent-hover);
 }
 .button:active:not(:disabled) {
-  transform: translateY(1px);
+  scale: 0.96;
 }
 .button-quiet {
   background: transparent;
@@ -165,12 +167,6 @@ input[aria-invalid="true"] {
   min-height: 160px;
   color: var(--muted);
   font-size: var(--step--1);
-}
-
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 0.55s;
-  animation-timing-function: var(--ease);
 }
 
 @media (prefers-reduced-motion: reduce) {

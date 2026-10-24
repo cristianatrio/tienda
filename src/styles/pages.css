@@ -233,7 +233,7 @@
   letter-spacing: -0.04em;
   margin-bottom: 12px;
 }
-.about h1 span {
+.about h1 .line {
   display: block;
 }
 .about-intro p {

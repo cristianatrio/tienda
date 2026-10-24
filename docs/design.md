@@ -1,6 +1,6 @@
 # Dirección visual de AirKids
 
-La tienda vive en un dormitorio infantil: de día con la luz prendida y de noche con la luz apagada. El único gesto llamativo es ese cambio. El resto se mantiene quieto y ordenado.
+La tienda vive en un dormitorio infantil: de día con la luz prendida y de noche con la luz apagada. El gesto principal es ese cambio. El movimiento acompaña la lectura y responde a lo que hace la persona, sin tapar el contenido.
 
 ## Paleta
 
@@ -28,9 +28,17 @@ Recursive, una sola familia variable. Títulos con el eje casual al máximo (tra
 
 ## Movimiento
 
-- Apagar o prender la luz: fundido de 0,55 s mediante View Transitions donde el navegador lo admite, y encendido escalonado de las estrellas.
-- Contador del carrito: pulso breve al agregar.
-- Con movimiento reducido, todo cambia sin animación.
+Curvas: `--out` (salida suave) para entradas y `--spring` (pequeño rebote) para lo que se agrega o confirma.
+
+- Portada: el titular sube palabra por palabra desde una máscara, la foto se descubre de abajo hacia arriba y se asienta, y las estrellas aparecen una por una. Con el cursor, las estrellas más grandes se desplazan más, como si estuvieran más cerca.
+- Lectura: títulos, textos y listas aparecen una sola vez al entrar en pantalla. Las fotos del catálogo se abren como una cortina, columna por columna.
+- Fotos: las fichas se inclinan hacia el cursor y reciben un reflejo; de noche, el reflejo es una linterna cálida. Nunca se escalan por encima de su resolución.
+- Luz: la noche se extiende en un círculo desde el interruptor presionado. De noche, las estrellas titilan, la lámpara respira y cruza una estrella fugaz.
+- Navegación: el encabezado queda fijo y la pantalla se desliza. La foto de la ficha abierta viaja hasta el detalle y de ahí al carrito.
+- Acciones: el pijama vuela en arco hasta el contador, que lo recibe con un pulso. Al filtrar, ordenar o quitar del carrito, los elementos se reacomodan en lugar de saltar.
+- Pantallas de aviso: una luna que dormita en las páginas sin salida y una ronda de estrellas al completar el pedido.
+- Encabezado: sombra al bajar y una línea manteca que marca cuánto se leyó.
+- Con movimiento reducido, todo aparece en su lugar sin animación. Las animaciones continuas se detienen con el botón de pausa de la cinta, que se recuerda entre visitas.
 
 ## Fotografía
 

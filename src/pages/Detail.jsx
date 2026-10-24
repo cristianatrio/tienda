@@ -1,12 +1,15 @@
 import { ArrowLeft } from "lucide-react";
-import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useRef, useState } from "react";
+import { useParams } from "react-router-dom";
 import { availableToAdd } from "../cart.js";
 import { Notice } from "../components/Notice.jsx";
 import { ProductImage } from "../components/ProductImage.jsx";
 import { QuantityStepper } from "../components/QuantityStepper.jsx";
+import { TransitionLink } from "../components/TransitionLink.jsx";
 import { localizedDescription } from "../data.js";
 import { useI18n } from "../i18n.jsx";
+import { flyToCart, viewTransitionName } from "../motion.js";
+import { usePointerVars } from "../usePointerVars.js";
 import { isDemo } from "../services.js";
 import { usePageTitle } from "../usePageTitle.js";
 
@@ -16,6 +19,8 @@ export function Detail({ products, add, cart }) {
   const product = products.find((p) => p.id === id);
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
+  const pointer = usePointerVars();
+  const image = useRef(null);
   usePageTitle(product?.nombre ?? t.product.missingTitle);
   if (!product)
     return (
@@ -26,15 +31,20 @@ export function Detail({ products, add, cart }) {
   const available = availableToAdd(cart, product);
   return (
     <section className="detail">
-      <Link className="back" to="/">
+      <TransitionLink className="back" to="/">
         <ArrowLeft aria-hidden="true" size={18} />
         {t.product.back}
-      </Link>
+      </TransitionLink>
       <div className="detail-grid">
-        <div className={`detail-image tone-${product.tipo}`}>
+        <div
+          ref={image}
+          className={`detail-image tone-${product.tipo}`}
+          style={{ "--vt-name": viewTransitionName(product.id) }}
+          {...pointer}
+        >
           <ProductImage product={product} />
         </div>
-        <div className="detail-copy">
+        <div className="detail-copy enter">
           <p className="product-category">
             {t.categories[product.tipo] || product.tipo}
           </p>
@@ -60,6 +70,7 @@ export function Detail({ products, add, cart }) {
               className="button"
               disabled={!available || quantity > available}
               onClick={() => {
+                flyToCart(image.current);
                 add(id, quantity);
                 setAdded(true);
                 setQuantity(1);
@@ -70,7 +81,8 @@ export function Detail({ products, add, cart }) {
           </div>
           {added && (
             <p role="status" className="added">
-              {t.product.added} <Link to="/cart">{t.product.viewCart}</Link>
+              {t.product.added}{" "}
+              <TransitionLink to="/cart">{t.product.viewCart}</TransitionLink>
             </p>
           )}
           <p className="fine">

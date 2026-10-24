@@ -1,10 +1,16 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, NavLink, useParams } from "react-router-dom";
+import { flushSync } from "react-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { availableToAdd } from "../cart.js";
 import { Hero } from "../components/Hero.jsx";
+import { Marquee } from "../components/Marquee.jsx";
 import { ProductTile } from "../components/ProductTile.jsx";
+import { Reveal } from "../components/Reveal.jsx";
+import { SplitText } from "../components/SplitText.jsx";
+import { TransitionLink } from "../components/TransitionLink.jsx";
 import { categoryIds } from "../data.js";
 import { useI18n } from "../i18n.jsx";
+import { runTransition } from "../motion.js";
 import { usePageTitle } from "../usePageTitle.js";
 
 const ADDED_FEEDBACK_MS = 1600;
@@ -35,13 +41,18 @@ function Filters({ search, setSearch, sort, setSort }) {
   return (
     <div className="filters">
       <nav className="chips" aria-label={t.catalog.filters}>
-        <NavLink end to="/">
+        <TransitionLink as={NavLink} end to="/" transition="filter">
           {t.catalog.all}
-        </NavLink>
+        </TransitionLink>
         {categoryIds.map((id) => (
-          <NavLink key={id} to={`/categories/${id}`}>
+          <TransitionLink
+            as={NavLink}
+            key={id}
+            to={`/categories/${id}`}
+            transition="filter"
+          >
             {t.categories[id]}
-          </NavLink>
+          </TransitionLink>
         ))}
       </nav>
       <div className="search-sort">
@@ -56,7 +67,14 @@ function Filters({ search, setSearch, sort, setSort }) {
         </label>
         <label>
           <span>{t.catalog.sort}</span>
-          <select value={sort} onChange={(e) => setSort(e.target.value)}>
+          <select
+            value={sort}
+            onChange={(e) => {
+              const next = e.target.value;
+              // Tiles glide to their new places instead of jumping.
+              runTransition(() => flushSync(() => setSort(next)), "filter");
+            }}
+          >
             <option value="featured">{t.catalog.sortName}</option>
             <option value="low">{t.catalog.sortLow}</option>
             <option value="high">{t.catalog.sortHigh}</option>
@@ -90,24 +108,28 @@ export function Catalog({ products, cart, add }) {
   return (
     <>
       {!category && <Hero />}
+      {!category && <Marquee />}
       <section
         id="coleccion"
         className="collection"
         aria-labelledby="collection-title"
       >
-        <div className="section-heading">
+        <Reveal className="section-heading">
           <Heading id="collection-title">{title}</Heading>
           <p className="count" aria-live="polite">
             {t.catalog.count(filtered.length)}
           </p>
-        </div>
-        <Filters {...{ search, setSearch, sort, setSort }} />
+        </Reveal>
+        <Reveal delay={120}>
+          <Filters {...{ search, setSearch, sort, setSort }} />
+        </Reveal>
         {filtered.length ? (
           <div className="product-grid">
-            {filtered.map((p) => (
+            {filtered.map((p, index) => (
               <ProductTile
                 key={p.id}
                 product={p}
+                index={index}
                 headingLevel={category ? "h2" : "h3"}
                 canAdd={availableToAdd(cart, p) > 0}
                 justAdded={added.id === p.id}
@@ -134,9 +156,13 @@ export function Catalog({ products, cart, add }) {
         </p>
       </section>
       <section className="story-strip">
-        <h2>{t.story.title}</h2>
-        <p>{t.story.text}</p>
-        <Link to="/nosotros">{t.story.link}</Link>
+        <SplitText lines={[t.story.title]} />
+        <Reveal as="p" delay={200}>
+          {t.story.text}
+        </Reveal>
+        <Reveal delay={320}>
+          <TransitionLink to="/nosotros">{t.story.link}</TransitionLink>
+        </Reveal>
       </section>
     </>
   );

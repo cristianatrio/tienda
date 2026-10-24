@@ -1,11 +1,13 @@
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { flushSync } from "react-dom";
 import { MAX_UNITS_PER_LINE } from "../cart.js";
 import { Notice } from "../components/Notice.jsx";
 import { ProductImage } from "../components/ProductImage.jsx";
 import { QuantityStepper } from "../components/QuantityStepper.jsx";
+import { TransitionLink } from "../components/TransitionLink.jsx";
 import { useI18n } from "../i18n.jsx";
+import { runTransition, viewTransitionName } from "../motion.js";
 import { isDemo } from "../services.js";
 import { usePageTitle } from "../usePageTitle.js";
 import { Checkout } from "./Checkout.jsx";
@@ -15,9 +17,13 @@ function CartLine({ row, setQuantity, remove }) {
   const { product, quantity } = row;
   const name = product?.nombre || t.cart.unavailable;
   const price = product?.precio || 0;
+  const vtName = viewTransitionName(row.id);
   return (
-    <li>
-      <div className={`cart-thumb tone-${product?.tipo || "none"}`}>
+    <li style={{ "--tile-name": `line-${vtName}` }}>
+      <div
+        className={`cart-thumb tone-${product?.tipo || "none"}`}
+        style={{ "--vt-name": vtName }}
+      >
         {product && <ProductImage product={product} />}
       </div>
       <div className="cart-line">
@@ -38,7 +44,10 @@ function CartLine({ row, setQuantity, remove }) {
           <button
             type="button"
             className="text-button"
-            onClick={() => remove(row.id)}
+            onClick={() =>
+              // The remaining lines slide up to close the gap.
+              runTransition(() => flushSync(() => remove(row.id)), "filter")
+            }
             aria-label={t.cart.removeLabel(name)}
           >
             {t.cart.remove}
@@ -53,7 +62,7 @@ function CartLine({ row, setQuantity, remove }) {
 function OrderDone({ order }) {
   const { t } = useI18n();
   return (
-    <Notice title={isDemo ? t.cart.doneDemo : t.cart.doneLive}>
+    <Notice mood="party" title={isDemo ? t.cart.doneDemo : t.cart.doneLive}>
       <p role="status">
         {t.cart.orderNumber} <strong className="order-id">{order}</strong>
       </p>
@@ -99,10 +108,10 @@ export function Cart({ products, cart, setQuantity, remove, clear }) {
             <strong>{money(total)}</strong>
           </div>
           <div className="cart-footer">
-            <Link className="back" to="/">
+            <TransitionLink className="back" to="/">
               <ArrowLeft aria-hidden="true" size={18} />
               {t.cart.keepBrowsing}
-            </Link>
+            </TransitionLink>
             <button type="button" className="text-button" onClick={clear}>
               {t.cart.empty}
             </button>
